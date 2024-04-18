@@ -11,11 +11,11 @@
   },
   "dependencies": {
     "@linaria/core": "^6.1.0",
-    "@linaria/react": "^6.1.0",
     "@nuxt/content": "^2.12.1",
     "@wyw-in-js/babel-preset": "^0.5.1",
     "nuxt": "^3.11.2",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
-  }
+  },
+  "packageManager": "yarn@4.1.1"
 }

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import singleSubmitButton from '~/components/atoms/SingleSubmitButton.vue';
+import SingleSubmitButton from '~/components/atoms/SingleSubmitButton.vue';
 
 const router = useRouter();
 
-const handleClick = () => {
-  router.push('/test');
+const handleClick = async (event: MouseEvent) => {
+  await router.push('/test');
 };
 </script>
 
 <template>
   <p>Index Page</p>
-  <SingleSubmitButton @click="handleClick"> </SingleSubmitButton>
+  <SingleSubmitButton :onclick="handleClick"> </SingleSubmitButton>
 </template>

@@ -29,10 +29,10 @@ const handleClick = async (event: MouseEvent) => {
 <template>
   <button
     id="single-submit-button"
-    :buttonName="buttonName"
     :disabled="disabled || processing"
     @click="handleClick"
   >
+    {{ buttonName }}
     <slot></slot>
   </button>
 </template>
