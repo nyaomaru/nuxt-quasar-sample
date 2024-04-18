@@ -1,2 +1,20 @@
-# zero_runtime_css_nuxt
-Zero runtime css with Nuxt
+# Zero Runtime CSS
+
+I would like to try to use zero runtime css of `Linaria`.
+
+So I create the base template with Nuxt.
+
+## Get started 🚀
+
+If you use docker, you can run `docker compose up -d` in the working directory.
+
+```sh
+docker compose up -d
+```
+
+If you don't use docker, you need to run below command.
+
+```sh
+yarn
+yarn dev
+```
