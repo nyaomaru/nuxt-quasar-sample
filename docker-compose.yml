@@ -4,7 +4,7 @@ volumes:
 
 services:
   app:
-    container_name: app
+    container_name: nuxt
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,6 +12,7 @@ services:
       - sh
       - -c
       - |
+        yarn
         yarn dev
     restart: always
     tty: true

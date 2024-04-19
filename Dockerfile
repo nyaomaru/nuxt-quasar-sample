@@ -11,6 +11,6 @@ COPY .yarn ./.yarn
 
 RUN corepack enable
 RUN yarn set version stable
-RUN yarn
+# RUN yarn
 
 COPY . /app
