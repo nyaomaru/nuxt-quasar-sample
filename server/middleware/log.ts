@@ -1,3 +1,3 @@
 export default defineEventHandler(event => {
-  console.log('Nyaomaru request: ' + getRequestURL(event));
+  // console.log('Nyaomaru request: ' + getRequestURL(event));
 });

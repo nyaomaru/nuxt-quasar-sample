@@ -41,14 +41,14 @@ import { useMeta } from 'quasar';
 </script>
 
 <template>
-  <q-layout view="lHh Lpr lFf" class="container bg-grey-9 text-white">
+  <q-layout class="container bg-grey-9 text-white">
     <header class="header">
       <slot name="header" />
     </header>
     <main class="main">
-      <q-drawer v-model="rightDrawerOpen" show-if-above side="right" bordered>
+      <!-- <q-drawer v-model="rightDrawerOpen" show-if-above side="right" bordered>
         <div>test</div>
-      </q-drawer>
+      </q-drawer> -->
       <q-page-container>
         <slot />
       </q-page-container>

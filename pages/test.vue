@@ -3,7 +3,7 @@ import SingleSubmitButton from '@/components/molecules/SingleSubmitButton.vue';
 
 const router = useRouter();
 
-const handleClick = async (event: MouseEvent) => {
+const handleClick = async () => {
   await router.push('/test');
 };
 </script>

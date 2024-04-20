@@ -3,8 +3,7 @@ import SingleSubmitButton from '@/components/molecules/SingleSubmitButton.vue';
 
 const router = useRouter();
 
-const handleClick = (event: MouseEvent) => {
-  console.log('test');
+const handleClick = () => {
   router.push('/test');
 };
 </script>
@@ -13,6 +12,4 @@ const handleClick = (event: MouseEvent) => {
   <h1>Index Page</h1>
   <p>This is index page</p>
   <SingleSubmitButton button-name="GO TEST PAGE" :disabled="false" :onclick="handleClick" />
-  <q-btn color="primary" label="Primary" @click="handleClick" />
-  <QBtn color="secondary" label="Secondary" />
 </template>

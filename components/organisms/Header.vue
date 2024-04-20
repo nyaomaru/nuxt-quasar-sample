@@ -16,7 +16,7 @@ const toggleRightDrawer = () => {
         <q-avatar>
           <img src="/images/demo-logo.png" >
         </q-avatar>
-        {{ data.nyaomaru }}
+        {{ data?.nyaomaru }}
       </q-toolbar-title>
 
       <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
