@@ -1,38 +1,25 @@
-<!-- <template>
-  <div className="header-inner relative">
-    <div className="flex items-center justify-between">
-      <a href="/top" passHref>
-        <img />
-      </a>
+<script lang="ts" setup>
+const { data } = await useFetch('/api/nyaomaru');
 
-      {/* PC Navigation */}
-      <nav className="hidden md:block">
-        <ol className="flex items-center gap-16 font-bold">
-          <li>
-            <PrimaryScrollButton buttonName="Consult" scrollTo="plan-link" />
-          </li>
-        </ol>
-      </nav>
+const rightDrawerOpen = ref(false);
 
-      {/* Hamburger Button */}
-      <button
-        className="relative z-50 block size-12 rounded-full border md:hidden"
-        onClick="{handleMenuClick}"
-      ></button>
+const toggleRightDrawer = () => {
+  console.log('test');
+  rightDrawerOpen.value = !rightDrawerOpen.value;
+};
+</script>
 
-      {/* Drawer Menu and Overlay */}
-      <div onClick="{handleMenuClick}" />
-      <nav>
-        <ol className="flex flex-col space-y-5">
-          {' '}
-          <li className="cursor-pointer">
-            <PrimaryScrollButton
-              buttonName="Consult"
-              scrollTo="plan-link"
-            ></PrimaryScrollButton>
-          </li>
-        </ol>
-      </nav>
-    </div>
-  </div>
-</template> -->
+<template>
+  <q-header elevated class="bg-primary text-white">
+    <q-toolbar>
+      <q-toolbar-title>
+        <q-avatar>
+          <img src="/images/demo-logo.png" >
+        </q-avatar>
+        {{ data.nyaomaru }}
+      </q-toolbar-title>
+
+      <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+    </q-toolbar>
+  </q-header>
+</template>

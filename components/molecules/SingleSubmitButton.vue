@@ -15,7 +15,6 @@ const props = withDefaults(defineProps<Props>(), {
 const processing = ref(false);
 
 const handleClick = async (event: MouseEvent) => {
-  console.log('test');
   if (processing.value) return;
   processing.value = true;
 
