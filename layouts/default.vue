@@ -11,7 +11,7 @@ import { computed } from 'vue';
       <slot />
     </main>
     <footer class="footer">
-      <slot name="footer"></slot>
+      <slot name="footer"/>
     </footer>
   </div>
 </template>

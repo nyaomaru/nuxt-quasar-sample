@@ -15,9 +15,9 @@ const processing = ref(false);
 </script>
 
 <template>
-  <button class="submitButton" id="submit-button" :disabled="disabled">
+  <button id="submit-button" class="submitButton" :disabled="disabled">
     {{ buttonName }}
-    <slot></slot>
+    <slot/>
   </button>
 </template>
 

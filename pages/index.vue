@@ -11,7 +11,7 @@ const handleClick = async (event: MouseEvent) => {
 <template>
   <h1>Index Page</h1>
   <p>This is index page</p>
-  <SingleSubmitButton buttonName="GO TEST PAGE" :disabled="false" :onclick="handleClick" />
+  <SingleSubmitButton button-name="GO TEST PAGE" :disabled="false" :onclick="handleClick" />
   <q-btn color="primary" label="Primary" />
   <QBtn color="secondary" label="Secondary" />
 </template>

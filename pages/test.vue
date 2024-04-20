@@ -11,5 +11,5 @@ const handleClick = async (event: MouseEvent) => {
 <template>
   <h1>Test Page</h1>
   <p>This is test page</p>
-  <SingleSubmitButton buttonName="GO INDEX PAGE" :disabled="false" :onclick="handleClick" />
+  <SingleSubmitButton button-name="GO INDEX PAGE" :disabled="false" :onclick="handleClick" />
 </template>

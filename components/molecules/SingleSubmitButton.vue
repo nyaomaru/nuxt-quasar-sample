@@ -28,9 +28,9 @@ const handleClick = async (event: MouseEvent) => {
 
 <template>
   <SubmitButton
-    class="singleSubmitButton"
     id="single-submit-button"
-    :buttonName="buttonName"
+    class="singleSubmitButton"
+    :button-name="buttonName"
     :disabled="disabled || processing"
     @click="handleClick"
   />
