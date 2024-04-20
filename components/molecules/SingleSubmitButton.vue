@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import SubmitButton from '@/components/atoms/SubmitButton.vue';
 
 type Props = {
   onclick: (e: MouseEvent) => Promise<unknown> | unknown;
@@ -27,12 +27,13 @@ const handleClick = async (event: MouseEvent) => {
 </script>
 
 <template>
-  <button
+  <SubmitButton
+    class="singleSubmitButton"
     id="single-submit-button"
+    :buttonName="buttonName"
     :disabled="disabled || processing"
     @click="handleClick"
-  >
-    {{ buttonName }}
-    <slot></slot>
-  </button>
+  />
 </template>
+
+<style lang="scss"></style>

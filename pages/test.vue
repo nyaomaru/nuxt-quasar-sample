@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import SingleSubmitButton from '~/components/atoms/SingleSubmitButton.vue';
+import SingleSubmitButton from '@/components/molecules/SingleSubmitButton.vue';
 
 const router = useRouter();
 
-const handleClick = () => {
-  router.push('/');
+const handleClick = async (event: MouseEvent) => {
+  await router.push('/test');
 };
 </script>
 
 <template>
-  <p>Test Page</p>
-  <SingleSubmitButton :onclick="handleClick"> </SingleSubmitButton>
+  <h1>Test Page</h1>
+  <p>This is test page</p>
+  <SingleSubmitButton buttonName="GO INDEX PAGE" :disabled="false" :onclick="handleClick" />
 </template>

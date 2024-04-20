@@ -1,8 +1,6 @@
-# Zero Runtime CSS
+# Nuxt sample
 
-I would like to try to use zero runtime css of `Linaria`.
-
-So I create the base template with Nuxt.
+The base template with Nuxt.
 
 ## Get started 🚀
 

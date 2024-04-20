@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SingleSubmitButton from '~/components/atoms/SingleSubmitButton.vue';
+import SingleSubmitButton from '@/components/molecules/SingleSubmitButton.vue';
 
 const router = useRouter();
 
@@ -9,6 +9,9 @@ const handleClick = async (event: MouseEvent) => {
 </script>
 
 <template>
-  <p>Index Page</p>
-  <SingleSubmitButton :onclick="handleClick"> </SingleSubmitButton>
+  <h1>Index Page</h1>
+  <p>This is index page</p>
+  <SingleSubmitButton buttonName="GO TEST PAGE" :disabled="false" :onclick="handleClick" />
+  <q-btn color="primary" label="Primary" />
+  <QBtn color="secondary" label="Secondary" />
 </template>

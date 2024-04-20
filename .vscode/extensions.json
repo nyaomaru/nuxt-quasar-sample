@@ -1,9 +1,6 @@
 {
   "recommendations": [
-    "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "streetsidesoftware.code-spell-checker",
-    "bradlc.vscode-tailwindcss",
-    "csstools.postcss"
+    "streetsidesoftware.code-spell-checker"
   ]
 }

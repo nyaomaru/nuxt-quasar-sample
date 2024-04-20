@@ -1,30 +1,35 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-
-// const slots = defineSlots();
-
-// const hasHeader = computed(() => !!slots.header);
-// const hasFooter = computed(() => !!slots.footer);
 </script>
 
 <template>
   <div class="container">
-    <!-- <header
-      class="container__section container__section--header"
-      v-show="hasHeader"
-    >
+    <header class="header">
       <slot name="header" />
-    </header> -->
-    <div class="container__section container__section--body columns">
-      <main class="container__section container__section--body">
-        <slot />
-      </main>
-    </div>
-    <!-- <footer
-      class="container__section container__section--footer"
-      v-show="hasFooter"
-    >
+    </header>
+    <main class="main">
+      <slot />
+    </main>
+    <footer class="footer">
       <slot name="footer"></slot>
-    </footer> -->
+    </footer>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+%containerSection {
+  display: flex;
+  flex-grow: 1;
+}
+
+.header,
+.footer {
+  @extend %containerSection;
+}
+</style>
