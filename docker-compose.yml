@@ -1,0 +1,25 @@
+volumes:
+  next-build: {}
+  node-modules: {}
+
+services:
+  app:
+    container_name: nuxt
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      - sh
+      - -c
+      - |
+        yarn
+        yarn dev
+    restart: always
+    tty: true
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    ports:
+      - '3000:3000'
+      - '3001:3001'
