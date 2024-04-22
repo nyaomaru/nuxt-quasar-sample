@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InputText from '@/components/atoms/InputText.vue';
 import ErrorCard from '@/components/atoms/ErrorCard.vue';
 
 const userName = ref('');
@@ -14,11 +15,16 @@ const submit = () => {
     return;
   }
 
-  localStorage.setItem('userName', userName.value);
-  localStorage.setItem('password', password.value);
+  const auth = useAuthState();
+  auth.value.userName = userName.value;
+  auth.value.password = password.value;
 
   const router = useRouter();
   router.push('/login');
+};
+
+const updateValue = (value: string, target: string) => {
+  target = value;
 };
 </script>
 

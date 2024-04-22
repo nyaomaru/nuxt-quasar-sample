@@ -2,9 +2,11 @@
 import InputText from '@/components/atoms/InputText.vue';
 import ErrorCard from '@/components/atoms/ErrorCard.vue';
 
+import { resetAuth } from '@/composables/useAuthState';
+
 onMounted(() => {
-  const userInfo = localStorage.getItem('userName');
-  if (!userInfo) {
+  const auth = useAuthState();
+  if (auth.value.userName === '' || auth.value.password === '') {
     const router = useRouter();
     router.push('/register');
   }
@@ -22,22 +24,29 @@ const errorSetting = (message: string) => {
 };
 
 const login = () => {
-  const { userName, password } = useAuthState().value;
+  const auth = useAuthState();
 
-  if (loginUserName.value !== userName) {
+  if (loginUserName.value !== auth.value.userName) {
     errorSetting('User name is not correct');
     return;
   }
 
-  if (loginPassword.value !== password) {
+  if (loginPassword.value !== auth.value.password) {
     errorSetting('Password is not correct');
     return;
   }
 
-  sessionStorage.setItem('isLogin', 'true');
+  auth.value.isAuthenticated = true;
 
   const router = useRouter();
   router.push('/');
+};
+
+const resetUser = () => {
+  resetAuth();
+
+  const router = useRouter();
+  router.push('/register');
 };
 </script>
 
@@ -49,4 +58,5 @@ const login = () => {
   <p>Password</p>
   <InputText v-model="loginPassword" label="password" />
   <q-btn color="primary" label="Login" @click="login" />
+  <q-btn color="red" label="Reset User" @click="resetUser" />
 </template>

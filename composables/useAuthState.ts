@@ -5,11 +5,22 @@ type Auth = {
 };
 
 export const useAuthState = () => {
-  const auth = useState<Auth>('auth');
-
-  auth.value.isAuthenticated = sessionStorage.getItem('isLogin') !== null ? true : false;
-  auth.value.userName = localStorage.getItem('userName') ?? '';
-  auth.value.password = localStorage.getItem('password') ?? '';
+  const auth = useState<Auth>('auth', initAuth);
 
   return auth;
+};
+
+export const initAuth = () => {
+  return {
+    isAuthenticated: false,
+    userName: '',
+    password: '',
+  };
+};
+
+export const resetAuth = () => {
+  const auth = useAuthState();
+  auth.value.isAuthenticated = initAuth().isAuthenticated;
+  auth.value.userName = initAuth().userName;
+  auth.value.password = initAuth().password;
 };

@@ -2,12 +2,12 @@
 import { ref } from 'vue';
 
 type Props = {
-  inputValue: string;
+  modelValue: string;
   label: string;
 };
 
 const props = withDefaults(defineProps<Props>(), {
-  inputValue: '',
+  modelValue: '',
   label: 'input',
 });
 
@@ -16,10 +16,11 @@ const emit = defineEmits(['update:modelValue']);
 
 <template>
   <q-input
-    :model-value="inputValue"
+    :model-value="modelValue"
+    color="white"
     filled
     label="user name"
-    :rules="[val => val.length >= 0 || 'Please use minimum one string']"
-    @input="emit('update:modelValue', $event.target.value)"
+    :rules="[val => val.length > 0 || 'Please use minimum one string']"
+    @update:model-value="value => emit('update:modelValue', value)"
   />
 </template>
