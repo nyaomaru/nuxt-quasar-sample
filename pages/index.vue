@@ -6,6 +6,10 @@ const router = useRouter();
 const handleClick = () => {
   router.push('/test');
 };
+
+definePageMeta({
+  middleware: ['auth'],
+});
 </script>
 
 <template>

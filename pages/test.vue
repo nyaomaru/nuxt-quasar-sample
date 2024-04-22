@@ -4,8 +4,12 @@ import SingleSubmitButton from '@/components/molecules/SingleSubmitButton.vue';
 const router = useRouter();
 
 const handleClick = async () => {
-  await router.push('/test');
+  await router.push('/');
 };
+
+definePageMeta({
+  middleware: ['auth'],
+});
 </script>
 
 <template>
