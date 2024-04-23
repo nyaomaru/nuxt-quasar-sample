@@ -19,7 +19,7 @@ const emit = defineEmits(['update:modelValue']);
     :model-value="modelValue"
     color="white"
     filled
-    label="user name"
+    :label="label"
     :rules="[(val: string | any[]) => val.length > 0 || 'Please use minimum one string']"
     @update:model-value="(value: any) => emit('update:modelValue', value)"
   />
