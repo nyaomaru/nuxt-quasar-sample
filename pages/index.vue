@@ -14,7 +14,6 @@ definePageMeta({
 });
 
 const slide = ref('style');
-const lorem = 'Nyaomaru Demo';
 
 const carouselList: CarouselInfo[] = [
   {
@@ -44,7 +43,15 @@ const carouselList: CarouselInfo[] = [
   <h1>Index Page</h1>
   <Carousel v-model="slide" :carousel-list="carouselList" />
 
-  <p>This is index page</p>
+  <div class="pageContent">
+    <p>This is index page</p>
 
-  <SingleSubmitButton button-name="GO TEST PAGE" :disabled="false" :onclick="handleClick" />
+    <SingleSubmitButton button-name="GO TEST PAGE" :disabled="false" :onclick="handleClick" />
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.pageContent {
+  text-align: center;
+}
+</style>

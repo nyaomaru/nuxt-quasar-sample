@@ -1,10 +1,13 @@
 <script lang="ts" setup>
-const { data } = await useFetch('/api/nyaomaru');
+import Drawer from '@/components/molecules/Drawer.vue';
+
+const { data: comment } = await useFetch('/api/nyaomaru');
+
+const { data: menuList } = await useFetch('/api/menu');
 
 const rightDrawerOpen = ref(false);
 
 const toggleRightDrawer = () => {
-  console.log('test');
   rightDrawerOpen.value = !rightDrawerOpen.value;
 };
 </script>
@@ -13,13 +16,15 @@ const toggleRightDrawer = () => {
   <q-header elevated class="bg-primary text-white">
     <q-toolbar>
       <q-toolbar-title>
-        <q-avatar>
-          <img src="/images/demo-logo.png" >
+        <q-avatar @click="toggleRightDrawer">
+          <img src="/images/demo-logo.png" />
         </q-avatar>
-        {{ data?.nyaomaru }}
+        {{ comment?.nyaomaru }}
       </q-toolbar-title>
 
       <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
     </q-toolbar>
   </q-header>
+
+  <Drawer v-model="rightDrawerOpen" :menu-list="menuList" />
 </template>

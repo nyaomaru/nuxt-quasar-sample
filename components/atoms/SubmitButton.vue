@@ -17,13 +17,12 @@ const processing = ref(false);
 <template>
   <button id="submit-button" class="submitButton" :disabled="disabled">
     {{ buttonName }}
-    <slot/>
+    <slot />
   </button>
 </template>
 
 <style lang="scss" scoped>
 .submitButton {
-  display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
