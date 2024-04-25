@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-
 type Props = {
   modelValue: string;
   label: string;
