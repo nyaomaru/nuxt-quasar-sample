@@ -1,6 +1,6 @@
 export default defineEventHandler(event => {
   return {
-    nyaomaru: 'Nyaomaru is cat!',
+    nyaomaru: 'Nyaomaru',
     footer: 'Hope Happy Life',
   };
 });

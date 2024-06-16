@@ -6,6 +6,8 @@ export default defineNuxtConfig({
     // options here
   },
   quasar: {
+    sassVariables: true,
+    extras: { font: 'roboto-font' },
     /* */
   },
 });
