@@ -2,12 +2,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['nuxt-quasar-ui', '@nuxt/eslint'],
-  eslint: {
-    // options here
-  },
+  eslint: {},
   quasar: {
     sassVariables: true,
     extras: { font: 'roboto-font' },
-    /* */
   },
 });
