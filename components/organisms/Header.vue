@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import Drawer from '@/components/molecules/Drawer.vue';
+import Drawer, { type Menu } from '@/components/molecules/Drawer.vue';
 
 const { data: comment } = await useFetch('/api/nyaomaru');
 
-const { data: menuList } = await useFetch('/api/menu');
+const { data: menuList } = await useFetch<Menu[]>('/api/menu');
 
 const rightDrawerOpen = ref(false);
 
@@ -17,7 +17,7 @@ const toggleRightDrawer = () => {
     <q-toolbar>
       <q-toolbar-title>
         <q-avatar @click="toggleRightDrawer">
-          <img src="/images/demo-logo.png" />
+          <img class="logo" src="/images/demo-logo.png" />
         </q-avatar>
         {{ comment?.nyaomaru }}
       </q-toolbar-title>
@@ -26,5 +26,11 @@ const toggleRightDrawer = () => {
     </q-toolbar>
   </q-header>
 
-  <Drawer v-model="rightDrawerOpen" :menu-list="menuList" />
+  <Drawer v-model="rightDrawerOpen" :menu-list="menuList ?? []" />
 </template>
+
+<style lang="scss" scoped>
+.logo {
+  cursor: pointer;
+}
+</style>

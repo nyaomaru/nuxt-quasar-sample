@@ -1,5 +1,3 @@
-import { ref } from 'vue';
-
 export const useErrorMessage = () => {
   const errorMessage = ref<string>('');
   const showError = ref<boolean>(false);

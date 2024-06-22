@@ -36,10 +36,10 @@ const updateValue = (value: string, target: string) => {
   <ErrorCard v-show="showError" :error-message="String(errorMessage)" />
 
   <div class="q-gutter-md" style="max-width: 300px">
-    <h3>User Name</h3>
+    <p>User Name</p>
     <InputText v-model="userName" label="user name" />
 
-    <h3>Password</h3>
+    <p>Password</p>
     <InputText v-model="password" label="password" />
   </div>
 

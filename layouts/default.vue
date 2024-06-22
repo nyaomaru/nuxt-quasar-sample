@@ -1,43 +1,13 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { useMeta } from 'quasar';
+import { useBreadCrumbs } from '@/composables/useBreadCrumbs';
 
-// const metaData = {
-//   title: 'Nyaomaru Nuxt',
+const route = useRoute();
 
-//   meta: {
-//     description: { name: 'description', content: 'Top Page' },
-//     keywords: { name: 'keywords', content: 'Nyaomaru' },
-//     equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
-//     ogTitle: {
-//       property: 'og:title',
-//     },
-//   },
+const { breadCrumbs, showBreadCrumbs } = useBreadCrumbs();
 
-//   noscript: {
-//     default: 'This is content for browsers with no JS (or disabled JS)',
-//   },
-// };
-
-// useMeta(metaData);
-
-// useMeta(() => {
-//   return {
-//     title: 'Nyaomaru Nuxt',
-//     meta: {
-//       description: { name: 'description', content: 'Top Page' },
-//       keywords: { name: 'keywords', content: 'Nyaomaru' },
-//       equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
-//       ogTitle: {
-//         property: 'og:title',
-//       },
-//     },
-
-//     noscript: {
-//       default: 'This is content for browsers with no JS (or disabled JS)',
-//     },
-//   };
-// });
+useHead({
+  meta: [{ property: 'og:title', content: `App Name - ${route.meta.title}` }],
+});
 </script>
 
 <template>
@@ -46,10 +16,16 @@ import { useMeta } from 'quasar';
       <slot name="header" />
     </header>
     <main class="main">
-      <!-- <q-drawer v-model="rightDrawerOpen" show-if-above side="right" bordered>
-        <div>test</div>
-      </q-drawer> -->
       <q-page-container>
+        <q-breadcrumbs v-if="showBreadCrumbs">
+          <q-breadcrumbs-el label="Home" :to="{ path: '/' }" />
+          <q-breadcrumbs-el
+            v-for="(crumb, index) in breadCrumbs"
+            :key="index"
+            :label="crumb.label"
+            :to="{ path: crumb.to }"
+          />
+        </q-breadcrumbs>
         <slot />
       </q-page-container>
     </main>
