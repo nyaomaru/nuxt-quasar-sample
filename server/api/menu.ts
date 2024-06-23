@@ -1,14 +1,18 @@
+import { ROUTE } from '@/constants/route';
+
 export default defineEventHandler(event => {
   return [
     {
-      label: 'Nyaomaru Demo',
+      label: 'Profile',
       icon: 'pets',
       separator: true,
+      link: ROUTE.PROFILE,
     },
     {
-      label: 'Nyaomaru Demo',
+      label: 'Customer',
       icon: 'pets',
       separator: true,
+      link: ROUTE.CUSTOMER,
     },
     {
       label: 'Nyaomaru Demo',
