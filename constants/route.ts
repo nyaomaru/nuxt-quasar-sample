@@ -6,3 +6,5 @@ export const ROUTE = {
   CUSTOMER: '/customer',
   NOT_FOUND: '/:pathMatch(.*)*',
 } as const;
+
+export type Route = (typeof ROUTE)[keyof typeof ROUTE];
