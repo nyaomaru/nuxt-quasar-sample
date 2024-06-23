@@ -15,42 +15,27 @@ definePageMeta({
 
 const slide = ref('style');
 
-const carouselList: CarouselInfo[] = [
-  {
-    name: 'style',
-    icon: 'pets',
-    lorem: 'Nyaomaru Demo',
-  },
-  {
-    name: 'tv',
-    icon: 'home',
-    lorem: 'Nyaomaru is cat',
-  },
-  {
-    name: 'layers',
-    icon: 'hub',
-    lorem: 'Nyaomaru is pet',
-  },
-  {
-    name: 'map',
-    icon: 'thumb_up',
-    lorem: 'Nyaomaru is fluff ball',
-  },
-];
+const { data: carouselList } = await useFetch<CarouselInfo[]>('/api/profile');
 </script>
 
 <template>
   <h1>Profile Page</h1>
   <div class="pageContent">
-    <p>This is test page</p>
-    <Carousel v-model="slide" :carousel-list="carouselList" />
+    <h2>Nyaomaru Profile</h2>
+    <Carousel v-model="slide" :carousel-list="carouselList ?? []" />
 
-    <SingleSubmitButton button-name="GO INDEX PAGE" :disabled="false" :onclick="handleClick" />
+    <div class="pageContent__button">
+      <SingleSubmitButton button-name="GO INDEX PAGE" :disabled="false" :onclick="handleClick" />
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .pageContent {
   text-align: center;
+
+  &__button {
+    margin-top: 20px;
+  }
 }
 </style>
