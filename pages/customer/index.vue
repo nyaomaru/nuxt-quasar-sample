@@ -48,13 +48,33 @@ const columns = [
 </script>
 
 <template>
-  <h1>Customer Page</h1>
+  <h1>Customer</h1>
+  <h2>Customer List</h2>
   <div class="pageContent">
-    <h2>Customer List</h2>
-    <q-table title="Treats" :rows="customerList" :columns="columns" row-key="name" />
+    <q-table class="q-ma-md" title="Treats" :rows="customerList" :columns="columns" row-key="name">
+      <template #body="props">
+        <q-tr :props="props">
+          <q-td key="id" :props="props">
+            <NuxtLink :to="{ name: 'customer-id', params: { id: props.row.id } }">
+              {{ props.row.id }}
+            </NuxtLink>
+          </q-td>
+          <q-td key="name" :props="props">
+            <q-badge color="green">
+              {{ props.row.name }}
+            </q-badge>
+          </q-td>
+          <q-td key="location" :props="props">
+            <q-badge color="orange">
+              {{ props.row.location }}
+            </q-badge>
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
 
     <div class="pageContent__button">
-      <SingleSubmitButton button-name="GO INDEX PAGE" :disabled="false" :onclick="handleClick" />
+      <q-btn color="primary" outline label="back" @click="handleClick" />
     </div>
   </div>
 </template>

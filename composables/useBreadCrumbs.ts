@@ -5,21 +5,19 @@ export const useBreadCrumbs = () => {
 
   const breadCrumbs = computed(() => {
     const pathArray = route.path.split('/');
-    console.log(route.path);
-    console.log(pathArray);
 
     const crumbs = pathArray.map((path, index) => {
-      const to = '/' + pathArray.slice(0, index + 1).join('/');
-      return { label: path.charAt(0).toUpperCase() + path.slice(1), to };
+      const to = index === 0 ? '/' : String(pathArray.slice(0, index + 1)).replaceAll(',', '/');
+      return { label: path.charAt(0).toUpperCase() + path.slice(1), to: to };
     });
 
     return crumbs.filter(crumb => crumb.label !== '');
   });
 
-  console.log(breadCrumbs);
+  const showBreadCrumbsList = [ROUTE.TOP, ROUTE.LOGIN, ROUTE.REGISTER] as string[];
 
   const showBreadCrumbs = computed(() => {
-    return route.path !== ROUTE.TOP && route.path !== ROUTE.LOGIN && route.path !== ROUTE.REGISTER;
+    return !showBreadCrumbsList.includes(route.path);
   });
 
   return {

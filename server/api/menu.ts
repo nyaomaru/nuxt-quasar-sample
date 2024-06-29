@@ -4,13 +4,13 @@ export default defineEventHandler(event => {
   return [
     {
       label: 'Profile',
-      icon: 'pets',
+      icon: 'account_circle',
       separator: true,
       link: ROUTE.PROFILE,
     },
     {
       label: 'Customer',
-      icon: 'pets',
+      icon: 'description',
       separator: true,
       link: ROUTE.CUSTOMER,
     },

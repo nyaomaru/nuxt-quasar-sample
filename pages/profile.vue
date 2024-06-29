@@ -19,13 +19,15 @@ const { data: carouselList } = await useFetch<CarouselInfo[]>('/api/profile');
 </script>
 
 <template>
-  <h1>Profile Page</h1>
+  <h1>Profile</h1>
+
+  <h2>Nyaomaru Profile</h2>
+
   <div class="pageContent">
-    <h2>Nyaomaru Profile</h2>
-    <Carousel v-model="slide" :carousel-list="carouselList ?? []" />
+    <Carousel v-model="slide" class="q-ma-md" :carousel-list="carouselList ?? []" />
 
     <div class="pageContent__button">
-      <SingleSubmitButton button-name="GO INDEX PAGE" :disabled="false" :onclick="handleClick" />
+      <SingleSubmitButton button-name="GO TOP" :disabled="false" :onclick="handleClick" />
     </div>
   </div>
 </template>
