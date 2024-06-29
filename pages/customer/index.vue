@@ -49,9 +49,9 @@ const columns = [
 
 <template>
   <h1>Customer</h1>
+  <h2>Customer List</h2>
   <div class="pageContent">
-    <h2>Customer List</h2>
-    <q-table title="Treats" :rows="customerList" :columns="columns" row-key="name">
+    <q-table class="q-ma-md" title="Treats" :rows="customerList" :columns="columns" row-key="name">
       <template #body="props">
         <q-tr :props="props">
           <q-td key="id" :props="props">

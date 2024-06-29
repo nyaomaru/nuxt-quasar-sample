@@ -17,15 +17,15 @@ definePageMeta({
 </script>
 
 <template>
-  <h1>Top Page</h1>
+  <h1>Top</h1>
+
+  <h2>Page Link</h2>
 
   <div class="pageContent">
-    <h2>Page Link</h2>
-
     <div class="pageContent__card">
       <div class="pageContent__card--profile">
-        <q-card class="my-card" @click="toProfile">
-          <img src="/images/demo-logo.png" height="120px" />
+        <q-card @click="toProfile">
+          <img src="/images/demo-logo.png" height="240px" width="480px" alt="nyaomaru_profile" />
 
           <q-card-section>
             <div class="text-h6">Nyaomaru Profile</div>
@@ -35,8 +35,8 @@ definePageMeta({
       </div>
 
       <div class="pageContent__card--customer">
-        <q-card class="my-card" @click="toCustomer">
-          <img src="/images/client-img.png" height="120px" />
+        <q-card @click="toCustomer">
+          <img src="/images/client-img.png" height="240px" width="480px" alt="customer" />
 
           <q-card-section>
             <div class="text-h6">Customer</div>
@@ -54,7 +54,7 @@ definePageMeta({
 
   &__card {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     margin-top: 20px;
 
@@ -62,14 +62,14 @@ definePageMeta({
       margin: 20px;
       color: blue;
       cursor: pointer;
-      width: 240px;
+      width: 480px;
     }
 
     &--customer {
       margin: 20px;
       color: purple;
       cursor: pointer;
-      width: 240px;
+      width: 480px;
     }
   }
 

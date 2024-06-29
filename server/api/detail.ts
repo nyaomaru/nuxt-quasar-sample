@@ -5,11 +5,7 @@ const customerDetail = [
 ];
 
 export default defineEventHandler(event => {
-  console.log('event', event);
-  // const id = getRouterParam(event, 'id');
+  const query = getQuery(event);
 
-  // console.log('id', id);
-
-  // return customerDetail.find(customer => String(customer.id) === id);
-  return customerDetail[0];
+  return customerDetail.find(customer => String(query.id) === String(customer.id));
 });

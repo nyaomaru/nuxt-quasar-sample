@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import ContentCard from '@/components/molecules/ContentCard.vue';
+
 const router = useRouter();
 
 const handleClick = async () => {
@@ -18,34 +19,27 @@ type CustomerDetail = {
   age: number;
 };
 
-const { data: customerDetail } = await useFetch<CustomerDetail>('/api/detail', { params: 1 });
+const route = useRoute();
+
+const { data: customerDetail } = await useFetch<CustomerDetail>('/api/detail', {
+  params: { id: route.params.id },
+});
 </script>
 
 <template>
   <h1>Customer</h1>
+  <h2>Customer Detail</h2>
   <div class="pageContent">
-    <h2>Customer Detail</h2>
+    <div class="pageContent__cardArea q-ma-md row">
+      <ContentCard title="Name" icon="person" :description="customerDetail?.name ?? ''" />
+      <ContentCard title="Location" icon="place" :description="customerDetail?.location ?? ''" />
+      <ContentCard title="Hobby" icon="sports_esports" :description="customerDetail?.hobby ?? ''" />
+    </div>
 
-    <q-list>
-      <q-item>
-        <q-item-section>
-          <q-item-label>{{ customerDetail?.name }}</q-item-label>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ customerDetail?.location }}</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-section>
-          <q-item-label>{{ customerDetail?.hobby }}</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-section>
-          <q-item-label>{{ customerDetail?.age }}</q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
+    <div class="pageContent__cardArea q-ma-md row">
+      <ContentCard title="Age" icon="cake" :description="String(customerDetail?.age)" />
+      <ContentCard title="ID" icon="face" :description="String(customerDetail?.id)" />
+    </div>
 
     <div class="pageContent__button">
       <q-btn color="primary" outline label="back" @click="handleClick" />
@@ -56,6 +50,22 @@ const { data: customerDetail } = await useFetch<CustomerDetail>('/api/detail', {
 <style lang="scss" scoped>
 .pageContent {
   text-align: center;
+
+  &__cardArea {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__card {
+    width: 24rem;
+    color: black;
+
+    &--title {
+      display: flex;
+      align-items: center;
+      background-color: $grey-3;
+    }
+  }
 
   &__button {
     margin-top: 20px;
