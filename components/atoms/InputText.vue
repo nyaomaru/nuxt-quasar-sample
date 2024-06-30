@@ -15,7 +15,9 @@ const emit = defineEmits(['update:modelValue']);
 <template>
   <q-input
     :model-value="modelValue"
-    color="white"
+    color="black"
+    label-color="black"
+    bg-color="white"
     filled
     :label="label"
     :rules="[(val: string | any[]) => val.length > 0 || 'Please use minimum one string']"

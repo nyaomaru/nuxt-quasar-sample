@@ -22,8 +22,8 @@ definePageMeta({
   <h2>Page Link</h2>
 
   <div class="pageContent">
-    <div class="pageContent__card">
-      <div class="pageContent__card--profile">
+    <div class="pageContent__card row q-mt-md">
+      <div class="pageContent__card--profile col-6 q-pa-md">
         <q-card @click="toProfile">
           <img src="/images/demo-logo.png" height="240px" width="480px" alt="nyaomaru_profile" />
 
@@ -34,7 +34,7 @@ definePageMeta({
         </q-card>
       </div>
 
-      <div class="pageContent__card--customer">
+      <div class="pageContent__card--customer col-6 q-pa-md">
         <q-card @click="toCustomer">
           <img src="/images/client-img.png" height="240px" width="480px" alt="customer" />
 
@@ -49,6 +49,11 @@ definePageMeta({
 </template>
 
 <style lang="scss" scoped>
+%_card {
+  width: 24rem;
+  cursor: pointer;
+}
+
 .pageContent {
   text-align: center;
 
@@ -56,25 +61,16 @@ definePageMeta({
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 20px;
 
     &--profile {
-      margin: 20px;
       color: blue;
-      cursor: pointer;
-      width: 480px;
+      @extend %_card;
     }
 
     &--customer {
-      margin: 20px;
       color: purple;
-      cursor: pointer;
-      width: 480px;
+      @extend %_card;
     }
-  }
-
-  &__button {
-    margin-top: 20px;
   }
 }
 </style>
