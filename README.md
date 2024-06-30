@@ -1,6 +1,6 @@
 # Nuxt sample
 
-The base template with Nuxt.
+The base template with Nuxt and Quasar. These pages are responsive.
 
 ## Get started 🚀
 
