@@ -2,38 +2,31 @@
 import InputText from '@/components/atoms/InputText.vue';
 import ErrorCard from '@/components/atoms/ErrorCard.vue';
 
-import { useSchemaValidation } from '@/composables/validations/useSchemaValidation';
+import {
+  useSchemaValidation,
+  setErrorMessageList,
+} from '@/composables/validations/useSchemaValidation';
 import { useErrorMessage } from '@/composables/useErrorMessage';
 
 import { ROUTE } from '@/constants/route';
 
-import { authSchema } from '@/schemas/login';
+import { authSchema, type AuthSchema } from '@/schemas/login';
 
-const loginForm = ref({ userName: '', password: '' });
-const userNameErrorMessage = ref('');
-const passwordErrorMessage = ref('');
+const loginForm = ref<AuthSchema>({ userName: '', password: '' });
+const errorMessageList = ref<string[]>([]);
 
-const { errorMessages, showError } = useErrorMessage();
+const { errorMessages } = useErrorMessage();
 const { validate } = useSchemaValidation(authSchema, errorMessages);
 
 const submit = () => {
   validate(loginForm.value);
 
-  if (errorMessages.value !== '') {
-    if (typeof errorMessages.value !== 'string' && errorMessages.value !== null) {
-      const issues = errorMessages.value.issues;
-      issues.forEach(issue => {
-        if (issue.path[0] === 'userName') {
-          userNameErrorMessage.value = issue.path[0] + ': ' + issue.message;
-        }
-        if (issue.path[0] === 'password') {
-          passwordErrorMessage.value = issue.path[0] + ': ' + issue.message;
-        }
-      });
-      showError.value = true;
-      errorMessages.value = '';
-      return;
-    }
+  errorMessageList.value.splice(0);
+  if (typeof errorMessages.value !== 'string' && errorMessages.value !== null) {
+    const issues = errorMessages.value.issues;
+    setErrorMessageList(errorMessageList, issues);
+    errorMessages.value = null;
+    return;
   }
 
   const auth = useAuthState();
@@ -51,16 +44,9 @@ const updateValue = (value: string, target: string) => {
 
 <template>
   <h2>First, you need to create login user</h2>
-  <ErrorCard
-    v-show="userNameErrorMessage !== ''"
-    class="q-mb-md"
-    :error-message="userNameErrorMessage"
-  />
-  <ErrorCard
-    v-show="passwordErrorMessage !== ''"
-    class="q-mb-md"
-    :error-message="passwordErrorMessage"
-  />
+  <template v-for="(message, index) in errorMessageList" :key="index">
+    <ErrorCard v-show="message !== ''" class="q-mb-md" :error-message="message" />
+  </template>
 
   <form>
     <div class="q-gutter-md" style="max-width: 300px">
