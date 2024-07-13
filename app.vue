@@ -4,7 +4,7 @@ import Footer from '@/components/organisms/Footer.vue';
 
 useHead({
   title: 'Nyaomaru Nuxt',
-  titleTemplate: productCategory => {
+  titleTemplate: (productCategory: unknown) => {
     return productCategory ? `${productCategory} - Nyaomaru Nuxt` : 'Nyaomaru Nuxt';
   },
   meta: [

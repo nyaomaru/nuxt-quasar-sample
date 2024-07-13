@@ -2,25 +2,43 @@
 import InputText from '@/components/atoms/InputText.vue';
 import ErrorCard from '@/components/atoms/ErrorCard.vue';
 
+import { useSchemaValidation } from '@/composables/validations/useSchemaValidation';
 import { useErrorMessage } from '@/composables/useErrorMessage';
 
 import { ROUTE } from '@/constants/route';
 
-const userName = ref('');
-const password = ref('');
+import { authSchema } from '@/schemas/login';
 
-const [errorMessage, showError] = useErrorMessage();
+const loginForm = ref({ userName: '', password: '' });
+const userNameErrorMessage = ref('');
+const passwordErrorMessage = ref('');
+
+const { errorMessages, showError } = useErrorMessage();
+const { validate } = useSchemaValidation(authSchema, errorMessages);
 
 const submit = () => {
-  if (userName.value === '' || password.value === '') {
-    showError.value = true;
-    errorMessage.value = 'Please input more than one string';
-    return;
+  validate(loginForm.value);
+
+  if (errorMessages.value !== '') {
+    if (typeof errorMessages.value !== 'string' && errorMessages.value !== null) {
+      const issues = errorMessages.value.issues;
+      issues.forEach(issue => {
+        if (issue.path[0] === 'userName') {
+          userNameErrorMessage.value = issue.path[0] + ': ' + issue.message;
+        }
+        if (issue.path[0] === 'password') {
+          passwordErrorMessage.value = issue.path[0] + ': ' + issue.message;
+        }
+      });
+      showError.value = true;
+      errorMessages.value = '';
+      return;
+    }
   }
 
   const auth = useAuthState();
-  auth.value.userName = userName.value;
-  auth.value.password = password.value;
+  auth.value.userName = loginForm.value.userName;
+  auth.value.password = loginForm.value.password;
 
   const router = useRouter();
   router.push(ROUTE.LOGIN);
@@ -33,15 +51,26 @@ const updateValue = (value: string, target: string) => {
 
 <template>
   <h2>First, you need to create login user</h2>
-  <ErrorCard v-show="showError" :error-message="String(errorMessage)" />
+  <ErrorCard
+    v-show="userNameErrorMessage !== ''"
+    class="q-mb-md"
+    :error-message="userNameErrorMessage"
+  />
+  <ErrorCard
+    v-show="passwordErrorMessage !== ''"
+    class="q-mb-md"
+    :error-message="passwordErrorMessage"
+  />
 
-  <div class="q-gutter-md" style="max-width: 300px">
-    <p>User Name</p>
-    <InputText v-model="userName" label="user name" />
+  <form>
+    <div class="q-gutter-md" style="max-width: 300px">
+      <p>User Name</p>
+      <InputText v-model="loginForm.userName" label="user name" />
 
-    <p>Password</p>
-    <InputText v-model="password" label="password" />
-  </div>
+      <p>Password</p>
+      <InputText v-model="loginForm.password" label="password" />
+    </div>
 
-  <q-btn color="primary" label="Submit" @click="submit" />
+    <q-btn color="primary" label="Submit" @click="submit" />
+  </form>
 </template>
