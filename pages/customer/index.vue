@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import SingleSubmitButton from '@/components/molecules/SingleSubmitButton.vue';
-import type { CarouselInfo } from '@/components/molecules/Carousel.vue';
-import Carousel from '@/components/molecules/Carousel.vue';
-
 const router = useRouter();
 
 const handleClick = async () => {
@@ -73,7 +69,7 @@ const columns = [
       </template>
     </q-table>
 
-    <div class="pageContent__button">
+    <div class="q-mt-md">
       <q-btn color="primary" outline label="back" @click="handleClick" />
     </div>
   </div>
@@ -82,9 +78,5 @@ const columns = [
 <style lang="scss" scoped>
 .pageContent {
   text-align: center;
-
-  &__button {
-    margin-top: 20px;
-  }
 }
 </style>

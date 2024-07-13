@@ -15,9 +15,9 @@ const toggleRightDrawer = () => {
 <template>
   <q-header elevated class="bg-primary text-white">
     <q-toolbar>
-      <q-toolbar-title>
-        <q-avatar @click="toggleRightDrawer">
-          <img class="logo" src="/images/demo-logo.png" />
+      <q-toolbar-title class="headerTitle" @click="toggleRightDrawer">
+        <q-avatar size="32px">
+          <img src="/images/demo-logo.png" alt="logo" height="32px" width="32px" />
         </q-avatar>
         {{ comment?.nyaomaru }}
       </q-toolbar-title>
@@ -30,7 +30,7 @@ const toggleRightDrawer = () => {
 </template>
 
 <style lang="scss" scoped>
-.logo {
+.headerTitle {
   cursor: pointer;
 }
 </style>

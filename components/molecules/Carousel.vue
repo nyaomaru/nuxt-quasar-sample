@@ -30,7 +30,7 @@ const emit = defineEmits(['update:modelValue']);
     arrows
     height="300px"
     class="bg-primary text-white shadow-1 rounded-borders"
-    @update:model-value="(value: any) => emit('update:modelValue', value)"
+    @update:model-value="(value: unknown) => emit('update:modelValue', value)"
   >
     <template v-for="(carousel, index) in carouselList" :key="index">
       <q-carousel-slide :name="carousel.name" class="column no-wrap flex-center">

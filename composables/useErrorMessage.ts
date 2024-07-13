@@ -1,6 +1,8 @@
+import type { ZodError } from 'zod';
+
 export const useErrorMessage = () => {
-  const errorMessage = ref<string>('');
+  const errorMessages = ref<string | null | ZodError>(null);
   const showError = ref<boolean>(false);
 
-  return [errorMessage, showError];
+  return { errorMessages, showError };
 };

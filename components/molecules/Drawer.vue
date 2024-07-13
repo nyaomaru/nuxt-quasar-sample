@@ -33,7 +33,7 @@ const handleClick = (url: Route) => {
     :breakpoint="500"
     bordered
     class="text-black"
-    @update:model-value="(value: any) => emit('update:modelValue', value)"
+    @update:model-value="(value: unknown) => emit('update:modelValue', value)"
   >
     <q-scroll-area class="fit">
       <q-list>

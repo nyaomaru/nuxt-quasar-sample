@@ -16,14 +16,14 @@ onMounted(() => {
   }
 });
 
-const [errorMessage, showError] = useErrorMessage();
+const { errorMessages, showError } = useErrorMessage();
 
 const loginUserName = ref('');
 const loginPassword = ref('');
 
 const errorSetting = (message: string) => {
   showError.value = true;
-  errorMessage.value = message;
+  errorMessages.value = message;
 };
 
 const login = () => {
@@ -54,7 +54,7 @@ const resetUser = () => {
 </script>
 
 <template>
-  <ErrorCard v-show="showError" :error-message="String(errorMessage)" />
+  <ErrorCard v-show="showError" :error-message="String(errorMessages)" />
 
   <div class="q-gutter-md" style="max-width: 300px">
     <p>User name</p>
