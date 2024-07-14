@@ -2,7 +2,7 @@
 import InputText from '@/components/atoms/InputText.vue';
 import ErrorCard from '@/components/atoms/ErrorCard.vue';
 
-import { resetAuth } from '@/composables/useAuthState';
+import { resetAuth, authCheck } from '@/composables/useAuthState';
 import { useErrorMessage } from '@/composables/useErrorMessage';
 import {
   useSchemaValidation,
@@ -21,7 +21,7 @@ onMounted(() => {
   }
 });
 
-const { errorMessages, showError } = useErrorMessage();
+const { errorMessages } = useErrorMessage();
 
 const loginForm = ref<AuthSchema>({ userName: '', password: '' });
 const errorMessageList = ref<string[]>([]);
@@ -38,9 +38,8 @@ const login = () => {
     errorMessages.value = null;
     return;
   }
-  const auth = useAuthState();
 
-  auth.value.isAuthenticated = true;
+  authCheck(loginForm, errorMessageList);
 
   const router = useRouter();
   router.push('/');
