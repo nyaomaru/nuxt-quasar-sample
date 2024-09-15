@@ -16,8 +16,8 @@ const toggleRightDrawer = () => {
   <q-header elevated class="bg-primary text-white">
     <q-toolbar>
       <q-toolbar-title class="headerTitle" @click="toggleRightDrawer">
-        <q-avatar size="32px">
-          <img src="/images/demo-logo.png" alt="logo" height="32px" width="32px" />
+        <q-avatar size="24px" class="q-mb-xs">
+          <img src="/images/demo-logo.png" alt="logo" height="24px" width="24px" />
         </q-avatar>
         {{ comment?.nyaomaru }}
       </q-toolbar-title>
