@@ -13,7 +13,7 @@ const toggleRightDrawer = () => {
 </script>
 
 <template>
-  <q-header elevated class="bg-primary text-white">
+  <q-header elevated class="bg-black text-white">
     <q-toolbar>
       <q-toolbar-title class="headerTitle" @click="toggleRightDrawer">
         <q-avatar size="24px" class="q-mb-xs">

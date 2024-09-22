@@ -19,7 +19,13 @@ type CustomerInfo = {
 
 const { data: customerList } = await useFetch<CustomerInfo[]>('/api/customer');
 
-const columns = [
+const columns: Array<{
+  name: string;
+  label: string;
+  field: string;
+  align: 'right' | 'left' | 'center';
+  sortable?: boolean;
+}> = [
   {
     name: 'id',
     label: 'ID',
@@ -47,7 +53,13 @@ const columns = [
   <h1>Customer</h1>
   <h2>Customer List</h2>
   <div class="pageContent">
-    <q-table class="q-ma-md" title="Treats" :rows="customerList" :columns="columns" row-key="name">
+    <q-table
+      class="q-ma-md"
+      title="Treats"
+      :rows="customerList || []"
+      :columns="columns"
+      row-key="name"
+    >
       <template #body="props">
         <q-tr :props="props">
           <q-td key="id" :props="props">
