@@ -19,7 +19,7 @@ definePageMeta({
 <template>
   <h1>Top</h1>
 
-  <h2>Page Link</h2>
+  <h2>Page Links</h2>
 
   <div class="pageContent">
     <div class="pageContent__card row q-mt-md">

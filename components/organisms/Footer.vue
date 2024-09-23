@@ -3,7 +3,7 @@ const { data } = await useFetch('/api/nyaomaru');
 </script>
 
 <template>
-  <q-footer elevated class="bg-primary text-white">
+  <q-footer elevated class="bg-black text-white">
     <q-toolbar>
       <q-toolbar-title>
         {{ data?.footer }}

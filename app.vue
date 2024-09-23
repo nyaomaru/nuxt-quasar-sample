@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Header from '@/components/organisms/Header.vue';
 import Footer from '@/components/organisms/Footer.vue';
+import Main from '@/components/templates/Main.vue';
 
 useHead({
   title: 'Nyaomaru Nuxt',
@@ -23,7 +24,11 @@ useHead({
     <template #header>
       <Header />
     </template>
-    <NuxtPage />
+    <Main>
+      <template #main>
+        <NuxtPage />
+      </template>
+    </Main>
     <template #footer>
       <Footer />
     </template>
