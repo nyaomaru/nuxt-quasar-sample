@@ -19,6 +19,6 @@ Then you can access to `http://localhost:3000`
 If you don't use docker, you need to run below command.
 
 ```sh
-pnpm
+pnpm install
 pnpm dev
 ```
