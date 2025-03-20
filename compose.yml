@@ -12,8 +12,8 @@ services:
       - sh
       - -c
       - |
-        yarn
-        yarn dev
+        pnpm install --force
+        pnpm dev
     tty: true
     volumes:
       - type: bind
