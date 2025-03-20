@@ -14,11 +14,11 @@ docker compose up -d
 
 Then you can access to `http://localhost:3000`
 
-### 😺 Yarn
+### 😺 Pnpm
 
 If you don't use docker, you need to run below command.
 
 ```sh
-yarn
-yarn dev
+pnpm
+pnpm dev
 ```

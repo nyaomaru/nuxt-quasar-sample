@@ -1,15 +1,18 @@
-FROM node:20.12.0-bookworm
+FROM node:20-slim AS base
 LABEL maintainer="Nyaomaru<nyaonyao0725@gmail.com>"
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+RUN corepack enable
+RUN pnpm version
 
 VOLUME ["/app/.nuxt"]
 
-COPY package.json yarn.lock /app/
+COPY package.json pnpm-lock.yaml /app/
 
 WORKDIR /app
 
-COPY .yarn ./.yarn
-
-RUN corepack enable
-RUN yarn set version stable
+RUN pnpm install --frozen-lockfile
 
 COPY . /app
