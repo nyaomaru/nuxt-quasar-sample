@@ -1,4 +1,5 @@
 import type { AuthSchema, AuthCheckSchema } from '@/schemas/login';
+import type { Reactive } from 'vue';
 
 export const useAuthState = () => {
   const auth = useState<AuthCheckSchema>('auth', initAuth);
@@ -21,14 +22,14 @@ export const resetAuth = () => {
   auth.value.password = initAuth().password;
 };
 
-export const authCheck = (loginForm: Ref<AuthSchema>, errorMessageList: Ref<string[]>) => {
+export const authCheck = (loginForm: Reactive<AuthSchema>, errorMessageList: Ref<string[]>) => {
   const auth = useAuthState();
-  const loginFormKeys = Object.keys(loginForm.value) as Array<keyof AuthSchema>;
+  const loginFormKeys = Object.keys(loginForm) as Array<keyof AuthSchema>;
 
   for (const key of loginFormKeys) {
     console.log(key);
-    if (loginForm.value[key] !== auth.value[key]) {
-      console.log(loginForm.value[key]);
+    if (loginForm[key] !== auth.value[key]) {
+      console.log(loginForm[key]);
       errorMessageList.value.push(`${key} is not correct`);
     }
   }
