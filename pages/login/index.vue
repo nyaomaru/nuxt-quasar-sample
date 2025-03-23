@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import InputText from '@/components/atoms/InputText.vue';
-import ErrorCard from '@/components/atoms/ErrorCard.vue';
+import LoginForm from '@/components/organisms/LoginForm.vue';
 
 import { resetAuth, authCheck } from '@/composables/useAuthState';
 import { useErrorMessage } from '@/composables/useErrorMessage';
@@ -13,63 +12,59 @@ import { ROUTE } from '@/constants/route';
 
 import { authSchema, type AuthSchema } from '@/schemas/login';
 
+const router = useRouter();
+
 onMounted(() => {
   const auth = useAuthState();
-  if (auth.value.userName === '' || auth.value.password === '') {
-    const router = useRouter();
+  if (!auth.value.userName || !auth.value.password) {
     router.push(ROUTE.REGISTER);
   }
 });
 
+const loginForm = reactive<AuthSchema>({ userName: '', password: '' });
+
 const { errorMessages } = useErrorMessage();
-
-const loginForm = ref<AuthSchema>({ userName: '', password: '' });
 const errorMessageList = ref<string[]>([]);
-
 const { validate } = useSchemaValidation(authSchema, errorMessages);
 
-const login = () => {
-  validate(loginForm.value);
-
-  errorMessageList.value.splice(0);
+const handleErrors = () => {
+  errorMessageList.value = [];
   if (typeof errorMessages.value !== 'string' && errorMessages.value !== null) {
-    const issues = errorMessages.value.issues;
-    setErrorMessageList(errorMessageList, issues);
+    setErrorMessageList(errorMessageList, errorMessages.value.issues);
     errorMessages.value = null;
+    return false;
+  }
+  return true;
+};
+
+const handleLogin = () => {
+  validate(loginForm);
+
+  if (!handleErrors()) {
     return;
   }
 
   authCheck(loginForm, errorMessageList);
 
-  const router = useRouter();
   router.push('/');
 };
 
 const resetUser = () => {
   resetAuth();
-
-  const router = useRouter();
   router.push(ROUTE.REGISTER);
 };
 </script>
 
 <template>
-  <template v-for="(message, index) in errorMessageList" :key="index">
-    <ErrorCard v-show="message !== ''" class="q-mb-md" :error-message="message" />
-  </template>
+  <h2>Please type registered name and password again</h2>
 
-  <div class="q-gutter-md" style="max-width: 300px">
-    <p>User name</p>
-    <InputText v-model="loginForm.userName" label="user name" />
-
-    <p>Password</p>
-    <InputText v-model="loginForm.password" label="password" />
-  </div>
-
-  <div class="q-pa-sm">
-    <q-btn color="primary" label="Login" @click="login" />
-  </div>
-  <div class="q-pa-sm">
-    <q-btn color="red" label="Reset User" @click="resetUser" />
-  </div>
+  <LoginForm
+    v-model="loginForm"
+    :fields="[
+      { label: 'User Name', name: 'userName' },
+      { label: 'Password', name: 'password', type: 'password' },
+    ]"
+    :error-messages="errorMessageList"
+    @submit="handleLogin"
+  />
 </template>
