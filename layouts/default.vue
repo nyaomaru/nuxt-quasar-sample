@@ -11,11 +11,11 @@ useHead({
 </script>
 
 <template>
-  <q-layout class="container bg-grey-9 text-white">
+  <q-layout class="container bg-dark text-white">
     <header class="header">
       <slot name="header" />
     </header>
-    <main class="main">
+    <main class="main q-mx-auto flex">
       <q-page-container>
         <q-breadcrumbs v-if="showBreadCrumbs">
           <q-breadcrumbs-el label="Home" :to="{ path: '/' }" />
@@ -49,6 +49,27 @@ useHead({
 
 .main {
   height: 100vh;
+  width: 100%;
+  max-width: 800px;
+  min-width: 300px;
+  margin: auto;
+  padding: 0 16px;
+
+  @media (max-width: 600px) {
+    max-width: 100%;
+  }
+
+  @media (min-width: 600px) and (max-width: 900px) {
+    max-width: 90%;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1000px;
+  }
+
+  @media (min-width: 1600px) {
+    max-width: 1200px;
+  }
 }
 
 .header,
