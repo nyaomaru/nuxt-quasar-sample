@@ -88,7 +88,5 @@ const columns: Array<{
 </template>
 
 <style lang="scss" scoped>
-.pageContent {
-  text-align: center;
-}
+@import '@/assets/scss/page.scss';
 </style>

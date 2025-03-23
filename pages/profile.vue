@@ -33,9 +33,9 @@ const { data: carouselList } = await useFetch<CarouselInfo[]>('/api/profile');
 </template>
 
 <style lang="scss" scoped>
-.pageContent {
-  text-align: center;
+@import '@/assets/scss/page.scss';
 
+.pageContent {
   &__button {
     margin-top: 20px;
   }

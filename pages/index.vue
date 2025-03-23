@@ -25,7 +25,7 @@ definePageMeta({
     <div class="pageContent__card row q-mt-md">
       <div class="pageContent__card--profile col-6 q-pa-md">
         <q-card @click="toProfile">
-          <img src="/images/demo-logo.png" height="240px" width="480px" alt="nyaomaru_profile" />
+          <img src="/images/demo-logo.png" height="240px" width="480px" alt="nyaomaru_profile" >
 
           <q-card-section>
             <div class="text-h6">Nyaomaru Profile</div>
@@ -36,7 +36,7 @@ definePageMeta({
 
       <div class="pageContent__card--customer col-6 q-pa-md">
         <q-card @click="toCustomer">
-          <img src="/images/client-img.png" height="240px" width="480px" alt="customer" />
+          <img src="/images/client-img.png" height="240px" width="480px" alt="customer" >
 
           <q-card-section>
             <div class="text-h6">Customer</div>
@@ -49,14 +49,14 @@ definePageMeta({
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/page.scss';
+
 %_card {
   width: 24rem;
   cursor: pointer;
 }
 
 .pageContent {
-  text-align: center;
-
   &__card {
     display: flex;
     justify-content: space-around;

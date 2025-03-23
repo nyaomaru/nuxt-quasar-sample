@@ -48,9 +48,9 @@ const { data: customerDetail } = await useFetch<CustomerDetail>('/api/detail', {
 </template>
 
 <style lang="scss" scoped>
-.pageContent {
-  text-align: center;
+@import '@/assets/scss/page.scss';
 
+.pageContent {
   &__cardArea {
     display: flex;
     justify-content: center;
