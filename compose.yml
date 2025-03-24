@@ -13,6 +13,7 @@ services:
       - -c
       - |
         pnpm install --force
+        pnpm setup
         pnpm dev
     tty: true
     volumes:

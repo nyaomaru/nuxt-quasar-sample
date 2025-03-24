@@ -27,15 +27,15 @@ const { data: carouselList } = await useFetch<CarouselInfo[]>('/api/profile');
     <Carousel v-model="slide" class="q-ma-md" :carousel-list="carouselList ?? []" />
 
     <div class="pageContent__button">
-      <SingleSubmitButton button-name="GO TOP" :disabled="false" :onclick="handleClick" />
+      <q-btn color="primary" outline label="back" @click="handleClick" />
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.pageContent {
-  text-align: center;
+@import '@/assets/scss/page.scss';
 
+.pageContent {
   &__button {
     margin-top: 20px;
   }

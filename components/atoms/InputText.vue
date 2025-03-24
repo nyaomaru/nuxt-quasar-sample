@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 type Props = {
-  modelValue: string;
+  modelValue: string | number;
   label: string;
 };
 

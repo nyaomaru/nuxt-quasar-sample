@@ -1,12 +1,29 @@
 <script setup lang="ts">
+const { data: customers } = useFetch<CustomerInfo[]>('/api/customers');
+
 const router = useRouter();
 
-const handleClick = async () => {
+const handleCreate = async () => {
+  await router.push('/customer/create');
+};
+
+const handleBack = async () => {
   await router.push('/');
 };
 
+const route = useRoute();
+const showBanner = ref(route.query.success === '1');
+
 definePageMeta({
   middleware: ['auth'],
+});
+
+onMounted(() => {
+  if (showBanner.value) {
+    setTimeout(() => {
+      router.replace({ path: '/customer' });
+    }, 3000);
+  }
 });
 
 const slide = ref('style');
@@ -16,8 +33,6 @@ type CustomerInfo = {
   name: string;
   location: string;
 };
-
-const { data: customerList } = await useFetch<CustomerInfo[]>('/api/customer');
 
 const columns: Array<{
   name: string;
@@ -52,11 +67,20 @@ const columns: Array<{
 <template>
   <h1>Customer</h1>
   <h2>Customer List</h2>
+
+  <q-banner v-if="showBanner" class="bg-green-3 text-white q-pa-md">
+    Customer created successfully!
+  </q-banner>
+
+  <div class="q-ma-md flex justify-end">
+    <q-btn color="primary" label="create" @click="handleCreate" />
+  </div>
+
   <div class="pageContent">
     <q-table
       class="q-ma-md"
-      title="Treats"
-      :rows="customerList || []"
+      title="Customer List"
+      :rows="customers || []"
       :columns="columns"
       row-key="name"
     >
@@ -82,13 +106,11 @@ const columns: Array<{
     </q-table>
 
     <div class="q-mt-md">
-      <q-btn color="primary" outline label="back" @click="handleClick" />
+      <q-btn color="primary" outline label="back" @click="handleBack" />
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.pageContent {
-  text-align: center;
-}
+@import '@/assets/scss/page.scss';
 </style>

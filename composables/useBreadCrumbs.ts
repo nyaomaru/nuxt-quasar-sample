@@ -14,7 +14,7 @@ export const useBreadCrumbs = () => {
     return crumbs.filter((crumb: { label: string }) => crumb.label !== '');
   });
 
-  const notShowBreadCrumbsList = [ROUTE.TOP, ROUTE.LOGIN, ROUTE.REGISTER] as string[];
+  const notShowBreadCrumbsList = [ROUTE.LOGIN, ROUTE.REGISTER] as string[];
 
   const showBreadCrumbs = computed(() => {
     return !notShowBreadCrumbsList.includes(route.path);

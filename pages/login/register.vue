@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LoginForm from '@/components/organisms/LoginForm.vue';
+import Form from '@/components/molecules/Form.vue';
 
 import {
   useSchemaValidation,
@@ -41,13 +41,13 @@ const handleLogin = () => {
 <template>
   <h2>First, you need to create login user</h2>
 
-  <LoginForm
+  <Form
     v-model="loginForm"
     :fields="[
       { label: 'User Name', name: 'userName' },
       { label: 'Password', name: 'password', type: 'password' },
     ]"
     :error-messages="errorMessageList"
-    @submit="handleLogin"
+    :handle-submit="handleLogin"
   />
 </template>

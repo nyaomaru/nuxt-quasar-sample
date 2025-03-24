@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Form from '@/components/molecules/Form.vue';
 
-import { resetAuth, authCheck } from '@/composables/useAuthState';
 import { useErrorMessage } from '@/composables/useErrorMessage';
 import {
   useSchemaValidation,
@@ -10,7 +9,7 @@ import {
 
 import { ROUTE } from '@/constants/route';
 
-import { authSchema, type AuthSchema } from '@/schemas/login';
+import { customerSchema, type CustomerSchema } from '@/schemas/customer';
 
 const router = useRouter();
 
@@ -21,11 +20,11 @@ onMounted(() => {
   }
 });
 
-const loginForm = reactive<AuthSchema>({ userName: '', password: '' });
+const customerForm = reactive<CustomerSchema>({ name: '', location: '', hobby: '', age: 0 });
 
 const { errorMessages } = useErrorMessage();
 const errorMessageList = ref<string[]>([]);
-const { validate } = useSchemaValidation(authSchema, errorMessages);
+const { validate } = useSchemaValidation(customerSchema, errorMessages);
 
 const handleErrors = () => {
   errorMessageList.value = [];
@@ -37,34 +36,40 @@ const handleErrors = () => {
   return true;
 };
 
-const handleLogin = () => {
-  validate(loginForm);
+const handleSubmit = async () => {
+  customerForm.age = Number(customerForm.age);
+  validate(customerForm);
 
   if (!handleErrors()) {
     return;
   }
 
-  authCheck(loginForm, errorMessageList);
+  const { error } = await useFetch('/api/customers', {
+    method: 'POST',
+    body: customerForm,
+  });
 
-  router.push('/');
-};
-
-const resetUser = () => {
-  resetAuth();
-  router.push(ROUTE.REGISTER);
+  if (error.value) {
+    console.error(error.value);
+  } else {
+    router.push('/customer?success=1');
+  }
 };
 </script>
 
 <template>
-  <h2>Please type registered name and password again</h2>
+  <h1>Customer</h1>
+  <h2>Create new customer</h2>
 
   <Form
-    v-model="loginForm"
+    v-model="customerForm"
     :fields="[
-      { label: 'User Name', name: 'userName' },
-      { label: 'Password', name: 'password', type: 'password' },
+      { label: 'Name', name: 'name' },
+      { label: 'Location', name: 'location' },
+      { label: 'Hobby', name: 'hobby' },
+      { label: 'age', name: 'age', type: 'number' },
     ]"
     :error-messages="errorMessageList"
-    :handle-submit="handleLogin"
+    :handle-submit="handleSubmit"
   />
 </template>

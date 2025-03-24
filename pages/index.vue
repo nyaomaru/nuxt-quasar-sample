@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ROUTE } from '@/constants/route';
+import PageCard from '@/components/molecules/PageCard.vue';
 
 const router = useRouter();
 
@@ -24,39 +25,36 @@ definePageMeta({
   <div class="pageContent">
     <div class="pageContent__card row q-mt-md">
       <div class="pageContent__card--profile col-6 q-pa-md">
-        <q-card @click="toProfile">
-          <img src="/images/demo-logo.png" height="240px" width="480px" alt="nyaomaru_profile" />
-
-          <q-card-section>
-            <div class="text-h6">Nyaomaru Profile</div>
-            <div class="text-subtitle2">You might see nyaomeru detail</div>
-          </q-card-section>
-        </q-card>
+        <PageCard
+          title="Nyaomaru Profile"
+          subtitle="You might see nyaomeru detail"
+          img-src="/images/demo-logo.png"
+          img-alt="nyaomaru_profile"
+          @click="toProfile"
+        />
       </div>
 
       <div class="pageContent__card--customer col-6 q-pa-md">
-        <q-card @click="toCustomer">
-          <img src="/images/client-img.png" height="240px" width="480px" alt="customer" />
-
-          <q-card-section>
-            <div class="text-h6">Customer</div>
-            <div class="text-subtitle2">Nyaomaru's customer</div>
-          </q-card-section>
-        </q-card>
+        <PageCard
+          title="Customer"
+          subtitle="Nyaomaru's customer"
+          img-src="/images/client-img.png"
+          @click="toCustomer"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/page.scss';
+
 %_card {
   width: 24rem;
   cursor: pointer;
 }
 
 .pageContent {
-  text-align: center;
-
   &__card {
     display: flex;
     justify-content: space-around;
