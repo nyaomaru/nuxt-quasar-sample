@@ -20,5 +20,6 @@ If you don't use docker, you need to run below command.
 
 ```sh
 pnpm install
+pnpm setup
 pnpm dev
 ```
