@@ -27,9 +27,7 @@ export const authCheck = (loginForm: Reactive<AuthSchema>, errorMessageList: Ref
   const loginFormKeys = Object.keys(loginForm) as Array<keyof AuthSchema>;
 
   for (const key of loginFormKeys) {
-    console.log(key);
     if (loginForm[key] !== auth.value[key]) {
-      console.log(loginForm[key]);
       errorMessageList.value.push(`${key} is not correct`);
     }
   }
