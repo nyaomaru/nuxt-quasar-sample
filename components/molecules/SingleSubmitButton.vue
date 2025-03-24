@@ -3,7 +3,7 @@ import SubmitButton from '@/components/atoms/SubmitButton.vue';
 
 type Props = {
   onclick: (e: MouseEvent) => Promise<unknown> | unknown;
-  disabled: boolean;
+  disabled?: boolean;
   buttonName: string;
 };
 
