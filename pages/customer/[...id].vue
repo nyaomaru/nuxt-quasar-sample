@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import ContentCard from '@/components/molecules/ContentCard.vue';
 
+const route = useRoute();
+
+const { data: customer, error } = useFetch<CustomerDetail>(`/api/customers/${route.params.id}`);
+
 const router = useRouter();
 
 const handleClick = async () => {
@@ -18,27 +22,27 @@ type CustomerDetail = {
   hobby: string;
   age: number;
 };
-
-const route = useRoute();
-
-const { data: customerDetail } = await useFetch<CustomerDetail>('/api/detail', {
-  params: { id: route.params.id },
-});
 </script>
 
 <template>
   <h1>Customer</h1>
   <h2>Customer Detail</h2>
+  <div v-if="error">
+    <q-banner class="bg-red text-white">
+      {{ error.message }}
+    </q-banner>
+  </div>
+
   <div class="pageContent">
     <div class="pageContent__cardArea q-ma-md row">
-      <ContentCard title="Name" icon="person" :description="customerDetail?.name ?? ''" />
-      <ContentCard title="Location" icon="place" :description="customerDetail?.location ?? ''" />
-      <ContentCard title="Hobby" icon="sports_esports" :description="customerDetail?.hobby ?? ''" />
+      <ContentCard title="Name" icon="person" :description="customer?.name ?? ''" />
+      <ContentCard title="Location" icon="place" :description="customer?.location ?? ''" />
+      <ContentCard title="Hobby" icon="sports_esports" :description="customer?.hobby ?? ''" />
     </div>
 
     <div class="pageContent__cardArea q-ma-md row">
-      <ContentCard title="Age" icon="cake" :description="String(customerDetail?.age)" />
-      <ContentCard title="ID" icon="face" :description="String(customerDetail?.id)" />
+      <ContentCard title="Age" icon="cake" :description="String(customer?.age)" />
+      <ContentCard title="ID" icon="face" :description="String(customer?.id)" />
     </div>
 
     <div class="pageContent__button">
