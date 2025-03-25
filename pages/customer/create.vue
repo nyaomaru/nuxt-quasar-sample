@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Form from '@/components/molecules/Form.vue';
+import ErrorMessages from '@/components/molecules/ErrorMessages.vue';
 
 import { useErrorMessage } from '@/composables/useErrorMessage';
 import {
@@ -61,6 +62,8 @@ const handleSubmit = async () => {
   <h1>Customer</h1>
   <h2>Create new customer</h2>
 
+  <ErrorMessages :error-messages="errorMessageList" />
+
   <Form
     v-model="customerForm"
     :fields="[
@@ -69,7 +72,6 @@ const handleSubmit = async () => {
       { label: 'Hobby', name: 'hobby' },
       { label: 'age', name: 'age', type: 'number' },
     ]"
-    :error-messages="errorMessageList"
     :handle-submit="handleSubmit"
   />
 </template>

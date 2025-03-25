@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import InputText from '@/components/atoms/InputText.vue';
-import ErrorCard from '@/components/atoms/ErrorCard.vue';
 import SingleSubmitButton from './SingleSubmitButton.vue';
 
 interface FormField {
@@ -12,7 +11,6 @@ interface FormField {
 const props = defineProps<{
   fields: FormField[];
   modelValue: Record<string, string | number>;
-  errorMessages?: string[];
   handleSubmit: () => void;
 }>();
 
@@ -29,12 +27,6 @@ watchEffect(() => {
 
 <template>
   <form class="q-gutter-md flex column q-pa-md q-max-w-sm">
-    <template v-if="errorMessages">
-      <div v-for="(message, field) in errorMessages" :key="field">
-        <ErrorCard v-show="message !== ''" class="q-mb-md" :error-message="message" />
-      </div>
-    </template>
-
     <div v-for="field in fields" :key="field.name">
       <div class="q-mb-sm">
         <label :for="field.name">{{ field.label }}</label>
