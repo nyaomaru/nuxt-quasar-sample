@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: customers } = useFetch<CustomerInfo[]>('/api/customers');
+const { data: customers, refresh } = useFetch<CustomerInfo[]>('/api/customers');
 
 const router = useRouter();
 
@@ -12,14 +12,41 @@ const handleBack = async () => {
 };
 
 const route = useRoute();
-const showBanner = ref(route.query.success === '1');
+const showCreateSuccessBanner = ref(route.query.success === '1');
+const showDeleteSuccessBanner = ref(false);
+const confirm = ref(false);
+const deleteTarget = ref('');
+
+const handleDeleteCheck = (id: string) => {
+  confirm.value = true;
+  deleteTarget.value = id;
+};
+
+const handleDelete = async () => {
+  confirm.value = false;
+
+  try {
+    await useFetch(`/api/customers/${deleteTarget.value}`, {
+      method: 'DELETE',
+    });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    deleteTarget.value = '';
+  }
+
+  showCreateSuccessBanner.value = false;
+  showDeleteSuccessBanner.value = true;
+  refresh();
+};
 
 definePageMeta({
   middleware: ['auth'],
 });
 
 onMounted(() => {
-  if (showBanner.value) {
+  if (showCreateSuccessBanner.value) {
+    refresh();
     setTimeout(() => {
       router.replace({ path: '/customer' });
     }, 3000);
@@ -68,8 +95,11 @@ const columns: Array<{
   <h1>Customer</h1>
   <h2>Customer List</h2>
 
-  <q-banner v-if="showBanner" class="bg-green-3 text-white q-pa-md">
+  <q-banner v-if="showCreateSuccessBanner" class="bg-green-3 text-white q-pa-md">
     Customer created successfully!
+  </q-banner>
+  <q-banner v-if="showDeleteSuccessBanner" class="bg-green-3 text-white q-pa-md">
+    Customer deleted successfully!
   </q-banner>
 
   <div class="q-ma-md flex justify-end">
@@ -101,9 +131,26 @@ const columns: Array<{
               {{ props.row.location }}
             </q-badge>
           </q-td>
+          <q-td key="delete">
+            <q-btn push color="negative" @click="handleDeleteCheck(props.row.id)">Delete</q-btn>
+          </q-td>
         </q-tr>
       </template>
     </q-table>
+
+    <q-dialog v-model="confirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="warning" color="negative" text-color="white" />
+          <span class="q-ml-sm">You should make sure to delete this content</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat outline label="Cancel" />
+          <q-btn v-close-popup flat label="Delete" color="negative" @click="handleDelete" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
     <div class="q-mt-md">
       <q-btn color="primary" outline label="back" @click="handleBack" />

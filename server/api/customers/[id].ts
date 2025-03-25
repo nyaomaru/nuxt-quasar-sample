@@ -6,13 +6,23 @@ export default defineEventHandler(async event => {
     throw createError({ statusCode: 400, message: 'ID is required' });
   }
 
-  const customer = await prisma.customer.findUnique({
-    where: { id: Number(id) },
-  });
+  if (event.node.req.method === 'GET') {
+    const customer = await prisma.customer.findUnique({
+      where: { id: Number(id) },
+    });
 
-  if (!customer) {
-    throw createError({ statusCode: 404, message: 'Customer not found' });
+    if (!customer) {
+      throw createError({ statusCode: 404, message: 'Customer not found' });
+    }
+
+    return customer;
   }
 
-  return customer;
+  if (event.node.req.method === 'DELETE') {
+    const customer = await prisma.customer.delete({
+      where: { id: Number(id) },
+    });
+
+    return { message: 'Customer deleted', customer };
+  }
 });
