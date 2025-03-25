@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Form from '@/components/molecules/Form.vue';
+import ErrorMessages from '@/components/molecules/ErrorMessages.vue';
 
 import { resetAuth, authCheck } from '@/composables/useAuthState';
 import { useErrorMessage } from '@/composables/useErrorMessage';
@@ -58,13 +59,14 @@ const resetUser = () => {
 <template>
   <h2>Please type registered name and password again</h2>
 
+  <ErrorMessages :error-messages="errorMessageList" />
+
   <Form
     v-model="loginForm"
     :fields="[
       { label: 'User Name', name: 'userName' },
       { label: 'Password', name: 'password', type: 'password' },
     ]"
-    :error-messages="errorMessageList"
     :handle-submit="handleLogin"
   />
 </template>

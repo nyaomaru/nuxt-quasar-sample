@@ -1,28 +1,60 @@
 <script setup lang="ts">
-const { data: customers } = useFetch<CustomerInfo[]>('/api/customers');
+const { data: customers, refresh } = useFetch<CustomerInfo[]>('/api/customers');
 
 const router = useRouter();
 
-const handleCreate = async () => {
-  await router.push('/customer/create');
+const handleCreate = () => {
+  router.push('/customer/create');
 };
 
-const handleBack = async () => {
-  await router.push('/');
+const handleBack = () => {
+  router.push('/');
 };
 
 const route = useRoute();
-const showBanner = ref(route.query.success === '1');
+const showCreateSuccessBanner = ref(route.query.success === '1');
+const showDeleteSuccessBanner = ref(false);
+const confirm = ref(false);
+const deleteTarget = ref('');
+const errorMessage = ref('');
+
+const handleDeleteCheck = (id: string) => {
+  confirm.value = true;
+  deleteTarget.value = id;
+};
+
+const handleDelete = async () => {
+  confirm.value = false;
+  errorMessage.value = '';
+
+  try {
+    await useFetch(`/api/customers/${deleteTarget.value}`, {
+      method: 'DELETE',
+    });
+  } catch (error) {
+    console.error(error);
+    errorMessage.value = `Failed to delete customer. Please try again.`;
+    return;
+  } finally {
+    deleteTarget.value = '';
+  }
+
+  showCreateSuccessBanner.value = false;
+  showDeleteSuccessBanner.value = true;
+  await refresh();
+};
 
 definePageMeta({
   middleware: ['auth'],
 });
 
-onMounted(() => {
-  if (showBanner.value) {
-    setTimeout(() => {
-      router.replace({ path: '/customer' });
-    }, 3000);
+onMounted(async () => {
+  if (showCreateSuccessBanner.value) {
+    refresh().then(() => {
+      setTimeout(() => {
+        showCreateSuccessBanner.value = false;
+      }, 3000);
+    });
   }
 });
 
@@ -68,9 +100,21 @@ const columns: Array<{
   <h1>Customer</h1>
   <h2>Customer List</h2>
 
-  <q-banner v-if="showBanner" class="bg-green-3 text-white q-pa-md">
-    Customer created successfully!
-  </q-banner>
+  <q-transition appear name="fade">
+    <q-banner v-if="showCreateSuccessBanner" class="bg-secondary text-white q-pa-md">
+      Customer created successfully!
+    </q-banner>
+  </q-transition>
+  <q-transition appear name="fade">
+    <q-banner v-if="showDeleteSuccessBanner" class="bg-secondary text-white q-pa-md">
+      Customer deleted successfully!
+    </q-banner>
+  </q-transition>
+  <q-transition appear name="fade">
+    <q-banner v-if="errorMessage" class="bg-negative text-white q-pa-md">
+      {{ errorMessage }}
+    </q-banner>
+  </q-transition>
 
   <div class="q-ma-md flex justify-end">
     <q-btn color="primary" label="create" @click="handleCreate" />
@@ -82,7 +126,7 @@ const columns: Array<{
       title="Customer List"
       :rows="customers || []"
       :columns="columns"
-      row-key="name"
+      row-key="id"
     >
       <template #body="props">
         <q-tr :props="props">
@@ -101,9 +145,26 @@ const columns: Array<{
               {{ props.row.location }}
             </q-badge>
           </q-td>
+          <q-td key="delete">
+            <q-btn push color="negative" @click="handleDeleteCheck(props.row.id)">Delete</q-btn>
+          </q-td>
         </q-tr>
       </template>
     </q-table>
+
+    <q-dialog v-model="confirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="warning" color="negative" text-color="white" />
+          <span class="q-ml-sm">You should make sure to delete this content</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat outline label="Cancel" />
+          <q-btn v-close-popup flat label="Confirm Delete" color="negative" @click="handleDelete" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
     <div class="q-mt-md">
       <q-btn color="primary" outline label="back" @click="handleBack" />
