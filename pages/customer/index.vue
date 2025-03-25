@@ -31,6 +31,7 @@ const handleDelete = async () => {
     });
   } catch (error) {
     console.error(error);
+    return;
   } finally {
     deleteTarget.value = '';
   }
