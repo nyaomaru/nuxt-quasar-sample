@@ -7,10 +7,9 @@ import {
   useSchemaValidation,
   setErrorMessageList,
 } from '@/composables/validations/useSchemaValidation';
-
 import { ROUTE } from '@/constants/route';
-
 import { customerSchema, type CustomerSchema } from '@/schemas/customer';
+import { isString } from '@/utils/is';
 
 const router = useRouter();
 
@@ -27,21 +26,22 @@ const { errorMessages } = useErrorMessage();
 const errorMessageList = ref<string[]>([]);
 const { validate } = useSchemaValidation(customerSchema, errorMessages);
 
-const handleErrors = () => {
+const handleErrorMessages = () => {
   errorMessageList.value = [];
-  if (typeof errorMessages.value !== 'string' && errorMessages.value !== null) {
+  if (!isString(errorMessages.value) && errorMessages.value !== null) {
     setErrorMessageList(errorMessageList, errorMessages.value.issues);
     errorMessages.value = null;
-    return false;
   }
-  return true;
 };
+
+const isError = computed(() => errorMessageList.value.length > 0);
 
 const handleSubmit = async () => {
   customerForm.age = Number(customerForm.age);
   validate(customerForm);
+  handleErrorMessages();
 
-  if (!handleErrors()) {
+  if (isError.value) {
     return;
   }
 

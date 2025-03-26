@@ -8,3 +8,7 @@ export const customerSchema = z.object({
 });
 
 export type CustomerSchema = z.infer<typeof customerSchema>;
+
+export type CustomerDetailSchema = CustomerSchema & {
+  id: number;
+};

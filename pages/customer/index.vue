@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const { data: customers, refresh } = useFetch<CustomerInfo[]>('/api/customers');
+const { data: customers, refresh } = useAsyncData<CustomerInfo[]>('/api/customers', () =>
+  $fetch('/api/customers')
+);
 
 const router = useRouter();
 
@@ -58,8 +60,6 @@ onMounted(async () => {
   }
 });
 
-const slide = ref('style');
-
 type CustomerInfo = {
   id: number;
   name: string;
@@ -100,21 +100,15 @@ const columns: Array<{
   <h1>Customer</h1>
   <h2>Customer List</h2>
 
-  <q-transition appear name="fade">
-    <q-banner v-if="showCreateSuccessBanner" class="bg-secondary text-white q-pa-md">
-      Customer created successfully!
-    </q-banner>
-  </q-transition>
-  <q-transition appear name="fade">
-    <q-banner v-if="showDeleteSuccessBanner" class="bg-secondary text-white q-pa-md">
-      Customer deleted successfully!
-    </q-banner>
-  </q-transition>
-  <q-transition appear name="fade">
-    <q-banner v-if="errorMessage" class="bg-negative text-white q-pa-md">
-      {{ errorMessage }}
-    </q-banner>
-  </q-transition>
+  <q-banner v-if="showCreateSuccessBanner" class="bg-secondary text-white q-pa-md">
+    Customer created successfully!
+  </q-banner>
+  <q-banner v-if="showDeleteSuccessBanner" class="bg-secondary text-white q-pa-md">
+    Customer deleted successfully!
+  </q-banner>
+  <q-banner v-if="errorMessage" class="bg-negative text-white q-pa-md">
+    {{ errorMessage }}
+  </q-banner>
 
   <div class="q-ma-md flex justify-end">
     <q-btn color="primary" label="create" @click="handleCreate" />
