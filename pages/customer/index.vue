@@ -60,8 +60,6 @@ onMounted(async () => {
   }
 });
 
-const slide = ref('style');
-
 type CustomerInfo = {
   id: number;
   name: string;

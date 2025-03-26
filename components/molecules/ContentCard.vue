@@ -1,9 +1,13 @@
 <script setup lang="ts">
-const props = defineProps<{
-  title: string;
-  icon: string;
-  modelValue: string | number;
-}>();
+const props = withDefaults(
+  defineProps<{
+    title: string;
+    icon: string;
+    modelValue: string | number;
+    changeable?: boolean;
+  }>(),
+  { changeable: true }
+);
 
 const emit = defineEmits<{
   (event: 'update:modelValue', value: unknown): void;
@@ -12,13 +16,20 @@ const emit = defineEmits<{
 const isEditing = ref(false);
 const description = ref(props.modelValue);
 
-watchEffect(() => {
-  emit('update:modelValue', description.value);
-});
-
 const stopEditing = () => {
   isEditing.value = false;
 };
+
+watch(
+  () => props.modelValue,
+  newValue => {
+    description.value = newValue;
+  }
+);
+
+watchEffect(() => {
+  emit('update:modelValue', description.value);
+});
 </script>
 
 <template>
@@ -31,7 +42,7 @@ const stopEditing = () => {
     <q-separator dark inset />
 
     <q-card-section class="q-ma-md">
-      <template v-if="isEditing">
+      <template v-if="changeable && isEditing">
         <q-input v-model="description" autofocus dense outlined @blur="stopEditing" />
       </template>
       <template v-else>
