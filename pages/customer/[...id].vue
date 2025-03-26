@@ -3,7 +3,9 @@ import ContentCard from '@/components/molecules/ContentCard.vue';
 
 const route = useRoute();
 
-const { data: customer, error } = useFetch<CustomerDetail>(`/api/customers/${route.params.id}`);
+const { data: customer, error } = useAsyncData<CustomerDetail>(`customers-${route.params.id}`, () =>
+  $fetch(`/api/customers/${route.params.id}`)
+);
 
 const router = useRouter();
 
