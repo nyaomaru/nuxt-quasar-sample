@@ -25,4 +25,24 @@ export default defineEventHandler(async event => {
 
     return { message: 'Customer deleted', customer };
   }
+
+  // if (event.node.req.method === 'PUT') {
+  //   const body = await readBody(event);
+
+  //   if (!body.name || !body.location) {
+  //     throw createError({ statusCode: 400, message: 'Missing required fields' });
+  //   }
+
+  //   const customer = await prisma.customer.update({
+  //     where: { id: Number(id) },
+  //     data: {
+  //       name: body.name,
+  //       location: body.location,
+  //       hobby: body.hobby,
+  //       age: body.age,
+  //     },
+  //   });
+
+  //   return { message: 'Customer updated', customer };
+  // }
 });

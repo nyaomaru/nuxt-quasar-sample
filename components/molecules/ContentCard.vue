@@ -1,11 +1,24 @@
 <script setup lang="ts">
-type Props = {
+const props = defineProps<{
   title: string;
   icon: string;
-  description: string;
-};
+  modelValue: string | number;
+}>();
 
-const props = defineProps<Props>();
+const emit = defineEmits<{
+  (event: 'update:modelValue', value: unknown): void;
+}>();
+
+const isEditing = ref(false);
+const description = ref(props.modelValue);
+
+watchEffect(() => {
+  emit('update:modelValue', description.value);
+});
+
+const stopEditing = () => {
+  isEditing.value = false;
+};
 </script>
 
 <template>
@@ -18,7 +31,14 @@ const props = defineProps<Props>();
     <q-separator dark inset />
 
     <q-card-section class="q-ma-md">
-      <div class="text-subtitle1">{{ description }}</div>
+      <template v-if="isEditing">
+        <q-input v-model="description" autofocus dense outlined @blur="stopEditing" />
+      </template>
+      <template v-else>
+        <div class="text-subtitle1" @click="isEditing = true">
+          {{ description }}
+        </div>
+      </template>
     </q-card-section>
   </q-card>
 </template>

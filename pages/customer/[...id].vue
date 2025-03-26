@@ -3,11 +3,27 @@ import ContentCard from '@/components/molecules/ContentCard.vue';
 
 const route = useRoute();
 
-const { data: customer, error } = useAsyncData<CustomerDetail>(`customers-${route.params.id}`, () =>
-  $fetch(`/api/customers/${route.params.id}`)
-);
+// const { data: customer, error } = useAsyncData<CustomerDetail>(`customers-${route.params.id}`, () =>
+//   $fetch(`/api/customers/${route.params.id}`)
+// );
+
+const { data: customer, error } = useFetch<CustomerDetail>(`/api/customers/${route.params.id}`);
 
 const router = useRouter();
+
+const customerData = ref<CustomerDetail>({
+  id: 0,
+  name: '',
+  location: '',
+  hobby: '',
+  age: 0,
+});
+
+onMounted(() => {
+  if (customer && customer.value) {
+    customerData.value = customer.value;
+  }
+});
 
 const handleClick = async () => {
   await router.push('/customer');
@@ -37,14 +53,14 @@ type CustomerDetail = {
 
   <div class="pageContent">
     <div class="pageContent__cardArea q-ma-md row">
-      <ContentCard title="Name" icon="person" :description="customer?.name ?? ''" />
-      <ContentCard title="Location" icon="place" :description="customer?.location ?? ''" />
-      <ContentCard title="Hobby" icon="sports_esports" :description="customer?.hobby ?? ''" />
+      <ContentCard v-model="customerData.name" title="Name" icon="person" />
+      <ContentCard v-model="customerData.location" title="Location" icon="place" />
+      <ContentCard v-model="customerData.hobby" title="Hobby" icon="sports_esports" />
     </div>
 
     <div class="pageContent__cardArea q-ma-md row">
-      <ContentCard title="Age" icon="cake" :description="String(customer?.age)" />
-      <ContentCard title="ID" icon="face" :description="String(customer?.id)" />
+      <ContentCard v-model="customerData.age" title="Age" icon="cake" />
+      <ContentCard v-model="customerData.id" title="ID" icon="face" />
     </div>
 
     <div class="pageContent__button">

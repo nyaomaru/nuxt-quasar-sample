@@ -1,7 +1,8 @@
 <script setup lang="ts">
-const { data: customers, refresh } = useAsyncData<CustomerInfo[]>('customers', () =>
-  $fetch('/api/customers')
-);
+const { data: customers, refresh } = useFetch<CustomerInfo[]>('/api/customers');
+// const { data: customers, refresh } = useAsyncData<CustomerInfo[]>('customers', () =>
+//   $fetch('/api/customers')
+// );
 
 const router = useRouter();
 
