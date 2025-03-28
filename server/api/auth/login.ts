@@ -15,8 +15,6 @@ export default defineEventHandler(async event => {
     throw createError({ statusMessage: 'Missing required fields', statusCode: 400 });
   }
 
-  console.log('name:', name);
-  console.log('password:', password);
   const user = await prisma.user.findUnique({ where: { name } });
   if (!user) throw createError({ statusMessage: 'Invalid credentials', statusCode: 401 });
 

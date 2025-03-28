@@ -42,6 +42,18 @@ const refreshAccessToken = async () => {
   }
 };
 
+const logout = async () => {
+  const router = useRouter();
+
+  try {
+    await $fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+    resetAuth();
+    router.push('/login');
+  } catch (error) {
+    console.error('Logout failed:', error);
+  }
+};
+
 export const useAuth = () => {
-  return { login, refreshAccessToken };
+  return { login, refreshAccessToken, logout };
 };
