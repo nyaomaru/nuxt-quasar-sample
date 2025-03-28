@@ -24,6 +24,13 @@ const router = useRouter();
 const handleClick = (url: Route) => {
   router.push(url);
 };
+
+const { logout } = useAuth();
+
+const handleLogout = () => {
+  emit('update:modelValue', !props.modelValue);
+  logout();
+};
 </script>
 
 <template>
@@ -54,6 +61,16 @@ const handleClick = (url: Route) => {
           <q-separator v-if="menuItem.separator" :key="'sep' + index" />
         </template>
       </q-list>
+      <div class="q-ma-sm logoutButton">
+        <q-btn class="logoutButton" color="primary" outline label="logout" @click="handleLogout" />
+      </div>
     </q-scroll-area>
   </q-drawer>
 </template>
+
+<style lang="scss" scoped>
+.logoutButton {
+  display: flex;
+  justify-content: center;
+}
+</style>
