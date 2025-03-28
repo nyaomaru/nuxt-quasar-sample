@@ -2,23 +2,17 @@
 import ContentCard from '@/components/molecules/ContentCard.vue';
 import ErrorMessages from '@/components/molecules/ErrorMessages.vue';
 
-import { useErrorMessage } from '@/composables/useErrorMessage';
-import {
-  useSchemaValidation,
-  setErrorMessageList,
-} from '@/composables/validations/useSchemaValidation';
-
 import { customerSchema, type CustomerDetailSchema } from '@/schemas/customer';
-import { isString } from '@/utils/is';
 
 const route = useRoute();
+const { fetchWithAuth } = useFetchWithAuth();
 
 const {
   data: customer,
   error,
   refresh,
-} = useAsyncData<CustomerDetailSchema>(`/api/customers/${route.params.id}`, () =>
-  $fetch(`/api/customers/${route.params.id}`)
+} = await useAsyncData<CustomerDetailSchema>(`/api/customers/${route.params.id}`, () =>
+  fetchWithAuth<CustomerDetailSchema>(`/api/customers/${route.params.id}`)
 );
 
 const router = useRouter();
@@ -66,17 +60,17 @@ const handleUpdate = async () => {
     return;
   }
 
-  const { error } = await useFetch(`/api/customers/${route.params.id}`, {
-    method: 'PUT',
-    body: JSON.stringify(customerData),
-  });
+  try {
+    await fetchWithAuth<Response>(`/api/customers/${route.params.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(customerData),
+    });
 
-  if (error.value) {
-    console.error(error.value);
-    errorMessage.value = `Failed to update customer. Please try again. ${error.value}`;
-  } else {
     showUpdateSuccessBanner.value = true;
     refresh();
+  } catch (error) {
+    console.error(error);
+    errorMessage.value = `Failed to update customer. Please try again. ${error}`;
   }
 };
 

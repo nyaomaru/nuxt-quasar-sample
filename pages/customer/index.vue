@@ -1,7 +1,13 @@
 <script setup lang="ts">
-const { data: customers, refresh } = useAsyncData<CustomerInfo[]>('/api/customers', () =>
-  $fetch('/api/customers')
-);
+const { fetchWithAuth } = useFetchWithAuth();
+
+const {
+  data: customers,
+  refresh,
+  status,
+} = await useAsyncData<CustomerInfo[]>('/api/customers', () => {
+  return fetchWithAuth('/api/customers');
+});
 
 const router = useRouter();
 
@@ -30,7 +36,7 @@ const handleDelete = async () => {
   errorMessage.value = '';
 
   try {
-    await useFetch(`/api/customers/${deleteTarget.value}`, {
+    await fetchWithAuth(`/api/customers/${deleteTarget.value}`, {
       method: 'DELETE',
     });
   } catch (error) {
@@ -115,37 +121,41 @@ const columns: Array<{
   </div>
 
   <div class="pageContent">
-    <q-table
-      class="q-ma-md"
-      title="Customer List"
-      :rows="customers || []"
-      :columns="columns"
-      row-key="id"
-    >
-      <template #body="props">
-        <q-tr :props="props">
-          <q-td key="id" :props="props">
-            <NuxtLink :to="{ name: 'customer-id', params: { id: props.row.id } }">
-              {{ props.row.id }}
-            </NuxtLink>
-          </q-td>
-          <q-td key="name" :props="props">
-            <q-badge color="green">
-              {{ props.row.name }}
-            </q-badge>
-          </q-td>
-          <q-td key="location" :props="props">
-            <q-badge color="orange">
-              {{ props.row.location }}
-            </q-badge>
-          </q-td>
-          <q-td key="delete">
-            <q-btn push color="negative" @click="handleDeleteCheck(props.row.id)">Delete</q-btn>
-          </q-td>
-        </q-tr>
-      </template>
-    </q-table>
-
+    <div v-if="status === 'pending'" class="q-ma-md">
+      <q-spinner-hourglass size="50px" />
+    </div>
+    <div v-else-if="status === 'success'" class="q-ma-md">
+      <q-table
+        class="q-ma-md"
+        title="Customer List"
+        :rows="customers || []"
+        :columns="columns"
+        row-key="id"
+      >
+        <template #body="props">
+          <q-tr :props="props">
+            <q-td key="id" :props="props">
+              <NuxtLink :to="{ name: 'customer-id', params: { id: props.row.id } }">
+                {{ props.row.id }}
+              </NuxtLink>
+            </q-td>
+            <q-td key="name" :props="props">
+              <q-badge color="green">
+                {{ props.row.name }}
+              </q-badge>
+            </q-td>
+            <q-td key="location" :props="props">
+              <q-badge color="orange">
+                {{ props.row.location }}
+              </q-badge>
+            </q-td>
+            <q-td key="delete">
+              <q-btn push color="negative" @click="handleDeleteCheck(props.row.id)">Delete</q-btn>
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
+    </div>
     <q-dialog v-model="confirm" persistent>
       <q-card>
         <q-card-section class="row items-center">
