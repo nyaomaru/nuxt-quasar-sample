@@ -12,7 +12,7 @@ export default defineEventHandler(async event => {
     const body = await readBody(event);
 
     if (!body.name || !body.location) {
-      return { error: 'Missing required fields' };
+      throw createError({ message: 'Missing required fields', statusCode: 400 });
     }
 
     const customer = await prisma.customer.create({
@@ -24,6 +24,6 @@ export default defineEventHandler(async event => {
       },
     });
 
-    return { message: 'Customer created', customer };
+    return { statusMessage: 'Customer created', statusCode: 201 };
   }
 });

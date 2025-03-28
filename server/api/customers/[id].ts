@@ -3,7 +3,7 @@ import prisma from '../../prisma/client';
 export default defineEventHandler(async event => {
   const id = event.context.params?.id;
   if (!id) {
-    throw createError({ statusCode: 400, message: 'ID is required' });
+    throw createError({ statusCode: 400, statusMessage: 'ID is required' });
   }
 
   if (event.node.req.method === 'GET') {
@@ -12,7 +12,7 @@ export default defineEventHandler(async event => {
     });
 
     if (!customer) {
-      throw createError({ statusCode: 404, message: 'Customer not found' });
+      throw createError({ statusCode: 404, statusMessage: 'Customer not found' });
     }
 
     return customer;
@@ -23,14 +23,14 @@ export default defineEventHandler(async event => {
       where: { id: Number(id) },
     });
 
-    return { message: 'Customer deleted', customer };
+    return { statusMessage: 'Customer deleted', customer };
   }
 
   if (event.node.req.method === 'PUT') {
     const body = await readBody(event);
 
     if (!body.name || !body.location) {
-      throw createError({ statusCode: 400, message: 'Missing required fields' });
+      throw createError({ statusCode: 400, statusMessage: 'Missing required fields' });
     }
 
     const customer = await prisma.customer.update({
@@ -43,6 +43,6 @@ export default defineEventHandler(async event => {
       },
     });
 
-    return { message: 'Customer updated', customer };
+    return { statusMessage: 'Customer updated', customer };
   }
 });
