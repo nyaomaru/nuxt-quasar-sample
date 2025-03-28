@@ -1,40 +1,30 @@
 import type { AuthSchema, AuthCheckSchema } from '@/schemas/login';
-import type { Reactive } from 'vue';
 
 export const useAuthState = () => {
-  const auth = useState<AuthCheckSchema>('auth', initAuth);
-
-  return auth;
-};
-
-export const initAuth = () => {
-  return {
+  return useState<AuthCheckSchema & { accessToken: string | null }>('auth', () => ({
     isAuthenticated: false,
     userName: '',
-    password: '',
-  };
+    accessToken: null,
+  }));
 };
 
 export const resetAuth = () => {
   const auth = useAuthState();
-  auth.value.isAuthenticated = initAuth().isAuthenticated;
-  auth.value.userName = initAuth().userName;
-  auth.value.password = initAuth().password;
+  auth.value = {
+    isAuthenticated: false,
+    userName: '',
+    accessToken: null,
+  };
 };
 
-export const authCheck = (loginForm: Reactive<AuthSchema>, errorMessageList: Ref<string[]>) => {
+export const authCheck = (loginForm: AuthSchema, errorMessageList: Ref<string[]>) => {
   const auth = useAuthState();
-  const loginFormKeys = Object.keys(loginForm) as Array<keyof AuthSchema>;
 
-  for (const key of loginFormKeys) {
-    if (loginForm[key] !== auth.value[key]) {
-      errorMessageList.value.push(`${key} is not correct`);
-    }
+  if (loginForm['userName'] !== auth.value['userName']) {
+    errorMessageList.value.push(`userName is not correct`);
   }
 
-  if (errorMessageList.value.length > 0) {
-    return;
+  if (errorMessageList.value.length === 0) {
+    auth.value.isAuthenticated = true;
   }
-
-  auth.value.isAuthenticated = true;
 };
