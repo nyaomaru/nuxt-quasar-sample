@@ -7,8 +7,10 @@ export const authSchema = z.object({
 
 export type AuthSchema = z.infer<typeof authSchema>;
 
-export const authCheckSchema = authSchema.extend({
-  isAuthenticated: z.boolean(),
-});
+export const authCheckSchema = authSchema
+  .extend({
+    isAuthenticated: z.boolean(),
+  })
+  .omit({ password: true });
 
 export type AuthCheckSchema = z.infer<typeof authCheckSchema>;
