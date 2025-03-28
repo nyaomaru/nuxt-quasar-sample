@@ -20,7 +20,7 @@ useHead({
 </script>
 
 <template>
-  <NuxtLayout>
+  <NuxtLayout class="nuxt">
     <template #header>
       <Header />
     </template>
@@ -37,6 +37,11 @@ useHead({
 
 <style lang="scss">
 @use '~/assets/scss/main.scss';
+
+.nuxt {
+  height: 100%;
+  overflow-y: scroll;
+}
 
 .layout-enter-active,
 .layout-leave-active {

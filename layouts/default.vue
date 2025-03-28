@@ -11,7 +11,7 @@ useHead({
 </script>
 
 <template>
-  <q-layout class="container bg-dark text-white">
+  <q-layout view="lHh lpr lFf" class="container bg-dark text-white">
     <header class="header">
       <slot name="header" />
     </header>
@@ -37,7 +37,6 @@ useHead({
 
 <style lang="scss" scoped>
 .container {
-  display: flex;
   flex-direction: column;
   width: 100%;
 }
