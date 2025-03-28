@@ -62,7 +62,7 @@ const handleLogout = () => {
         </template>
       </q-list>
       <div class="q-ma-sm logoutButton">
-        <q-btn class="logoutButton" color="primary" outline label="logout" @click="handleLogout" />
+        <q-btn color="primary" outline label="logout" @click="handleLogout" />
       </div>
     </q-scroll-area>
   </q-drawer>
