@@ -20,7 +20,12 @@ const emit = defineEmits(['update:modelValue']);
     bg-color="white"
     filled
     :label="label"
-    :rules="[(val: string | unknown[]) => val.length > 0 || 'Please use minimum one string']"
+    :rules="[
+      (val: string | number | unknown[]) => {
+        if (isNumber(val)) return true;
+        return (isString(val) && val.length > 0) || 'Please use minimum one string';
+      },
+    ]"
     @update:model-value="(value: unknown) => emit('update:modelValue', value)"
   />
 </template>

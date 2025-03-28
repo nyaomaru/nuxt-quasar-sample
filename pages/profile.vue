@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SingleSubmitButton from '@/components/molecules/SingleSubmitButton.vue';
 import type { CarouselInfo } from '@/components/molecules/Carousel.vue';
 import Carousel from '@/components/molecules/Carousel.vue';
 

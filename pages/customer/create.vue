@@ -2,26 +2,15 @@
 import Form from '@/components/molecules/Form.vue';
 import ErrorMessages from '@/components/molecules/ErrorMessages.vue';
 
-import { useErrorMessage } from '@/composables/useErrorMessage';
-import {
-  useSchemaValidation,
-  setErrorMessageList,
-} from '@/composables/validations/useSchemaValidation';
-import { ROUTE } from '@/constants/route';
 import { customerSchema, type CustomerSchema } from '@/schemas/customer';
-import { isString } from '@/utils/is';
 
 const router = useRouter();
 
-onMounted(() => {
-  const auth = useAuthState();
-  if (!auth.value.userName || !auth.value.password) {
-    router.push(ROUTE.REGISTER);
-  }
-});
+const { fetchWithAuth } = useFetchWithAuth();
 
 const customerForm = reactive<CustomerSchema>({ name: '', location: '', hobby: '', age: 0 });
 
+const errorMessage = ref('');
 const { errorMessages } = useErrorMessage();
 const errorMessageList = ref<string[]>([]);
 const { validate } = useSchemaValidation(customerSchema, errorMessages);
@@ -45,15 +34,15 @@ const handleSubmit = async () => {
     return;
   }
 
-  const { error } = await useFetch('/api/customers', {
-    method: 'POST',
-    body: customerForm,
-  });
-
-  if (error.value) {
-    console.error(error.value);
-  } else {
+  try {
+    await fetchWithAuth<Response>('/api/customers', {
+      method: 'POST',
+      body: JSON.stringify(customerForm),
+    });
     router.push('/customer?success=1');
+  } catch (error) {
+    console.error(error);
+    errorMessage.value = `Failed to create customer. Please try again.:${error}`;
   }
 };
 </script>
@@ -62,6 +51,9 @@ const handleSubmit = async () => {
   <h1>Customer</h1>
   <h2>Create new customer</h2>
 
+  <q-banner v-if="errorMessage" class="bg-negative text-white q-pa-md">
+    {{ errorMessage }}
+  </q-banner>
   <ErrorMessages :error-messages="errorMessageList" />
 
   <Form
