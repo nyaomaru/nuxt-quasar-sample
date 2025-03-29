@@ -11,10 +11,6 @@ const toProfile = () => {
 const toCustomer = () => {
   router.push(ROUTE.CUSTOMER);
 };
-
-definePageMeta({
-  middleware: ['auth'],
-});
 </script>
 
 <template>

@@ -8,10 +8,6 @@ const handleClick = async () => {
   await router.push('/');
 };
 
-definePageMeta({
-  middleware: ['auth'],
-});
-
 const slide = ref('style');
 
 const { data: carouselList } = await useFetch<CarouselInfo[]>('/api/profile');

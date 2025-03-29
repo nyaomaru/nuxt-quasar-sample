@@ -1,9 +1,16 @@
 <script lang="ts" setup>
 import { useBreadCrumbs } from '@/composables/useBreadCrumbs';
+import AuthWrapper from '@/components/organisms/AuthWrapper.vue';
 
 const route = useRoute();
 
 const { breadCrumbs, showBreadCrumbs } = useBreadCrumbs();
+
+const { checkAuth } = useAuthState();
+
+onMounted(() => {
+  checkAuth();
+});
 
 useHead({
   meta: [{ property: 'og:title', content: `App Name - ${route.meta.title}` }],
@@ -12,26 +19,28 @@ useHead({
 
 <template>
   <q-layout view="lHh lpr lFf" class="container bg-dark text-white">
-    <header class="header">
-      <slot name="header" />
-    </header>
-    <main class="main q-mx-auto flex">
-      <q-page-container>
-        <q-breadcrumbs v-if="showBreadCrumbs">
-          <q-breadcrumbs-el label="Home" :to="{ path: '/' }" />
-          <q-breadcrumbs-el
-            v-for="(crumb, index) in breadCrumbs"
-            :key="index"
-            :label="crumb.label"
-            :to="{ path: crumb.to }"
-          />
-        </q-breadcrumbs>
-        <slot />
-      </q-page-container>
-    </main>
-    <footer class="footer">
-      <slot name="footer" />
-    </footer>
+    <AuthWrapper>
+      <header class="header">
+        <slot name="header" />
+      </header>
+      <main class="main q-mx-auto flex">
+        <q-page-container>
+          <q-breadcrumbs v-if="showBreadCrumbs">
+            <q-breadcrumbs-el label="Home" :to="{ path: '/' }" />
+            <q-breadcrumbs-el
+              v-for="(crumb, index) in breadCrumbs"
+              :key="index"
+              :label="crumb.label"
+              :to="{ path: crumb.to }"
+            />
+          </q-breadcrumbs>
+          <slot />
+        </q-page-container>
+      </main>
+      <footer class="footer">
+        <slot name="footer" />
+      </footer>
+    </AuthWrapper>
   </q-layout>
 </template>
 

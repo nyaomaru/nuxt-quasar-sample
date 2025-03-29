@@ -1,30 +1,46 @@
+import { ROUTE } from '@/constants/route';
 import type { AuthSchema, AuthCheckSchema } from '@/schemas/login';
 
+type RefreshResponse = {
+  statusCode: number;
+  statusMessage?: string;
+  access_token: string;
+};
+
 export const useAuthState = () => {
-  return useState<AuthCheckSchema & { accessToken: string | null }>('auth', () => ({
+  const auth = useState<AuthCheckSchema & { accessToken: string | null }>('auth', () => ({
     isAuthenticated: false,
     userName: '',
     accessToken: null,
   }));
-};
 
-export const resetAuth = () => {
-  const auth = useAuthState();
-  auth.value = {
-    isAuthenticated: false,
-    userName: '',
-    accessToken: null,
+  const resetAuth = () => {
+    auth.value = {
+      isAuthenticated: false,
+      userName: '',
+      accessToken: null,
+    };
   };
-};
 
-export const authCheck = (loginForm: AuthSchema, errorMessageList: Ref<string[]>) => {
-  const auth = useAuthState();
+  const checkAuth = async () => {
+    if (auth.value.isAuthenticated) return;
 
-  if (loginForm['userName'] !== auth.value['userName']) {
-    errorMessageList.value.push(`userName is not correct`);
-  }
+    const { fetchWithAuth } = useFetchWithAuth();
 
-  if (errorMessageList.value.length === 0) {
-    auth.value.isAuthenticated = true;
-  }
+    try {
+      const response = await fetchWithAuth<RefreshResponse>('/api/auth/refresh', {
+        method: 'POST',
+      });
+
+      if (response.statusCode !== 200) throw new Error('Refresh token invalid');
+
+      auth.value.isAuthenticated = true;
+      auth.value.accessToken = response.access_token;
+    } catch (error) {
+      auth.value.isAuthenticated = false;
+      navigateTo(ROUTE.LOGIN);
+    }
+  };
+
+  return { auth, resetAuth, checkAuth };
 };
