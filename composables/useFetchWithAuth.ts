@@ -6,7 +6,7 @@ type FetchOptions = {
 };
 
 export const useFetchWithAuth = () => {
-  const auth = useAuthState();
+  const { auth } = useAuthState();
 
   const authHeaders = {
     Authorization: `Bearer ${auth.value.accessToken}`,
