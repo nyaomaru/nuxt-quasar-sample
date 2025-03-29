@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import ErrorMessages from '@/components/molecules/ErrorMessages.vue';
+import SuccessMessages from '@/components/molecules/SuccessMessages.vue';
+
 const { fetchWithAuth } = useFetchWithAuth();
 
 const {
@@ -10,6 +13,12 @@ const {
 });
 
 const router = useRouter();
+const route = useRoute();
+const confirm = ref(false);
+const deleteTarget = ref('');
+const errorMessageList = ref<string[]>([]);
+const successMessageList = ref<string[]>([]);
+const { handleApiError } = useApiError();
 
 const handleCreate = () => {
   router.push('/customer/create');
@@ -19,13 +28,6 @@ const handleBack = () => {
   router.push('/');
 };
 
-const route = useRoute();
-const showCreateSuccessBanner = ref(route.query.success === '1');
-const showDeleteSuccessBanner = ref(false);
-const confirm = ref(false);
-const deleteTarget = ref('');
-const errorMessage = ref('');
-
 const handleDeleteCheck = (id: string) => {
   confirm.value = true;
   deleteTarget.value = id;
@@ -33,34 +35,31 @@ const handleDeleteCheck = (id: string) => {
 
 const handleDelete = async () => {
   confirm.value = false;
-  errorMessage.value = '';
+  errorMessageList.value.splice(0);
 
   try {
     await fetchWithAuth(`/api/customers/${deleteTarget.value}`, {
       method: 'DELETE',
     });
   } catch (error) {
-    console.error(error);
-    errorMessage.value = `Failed to delete customer. Please try again.`;
+    handleApiError(error, errorMessageList, 'Failed to delete customer. Please try again.');
     return;
   } finally {
     deleteTarget.value = '';
   }
 
-  showCreateSuccessBanner.value = false;
-  showDeleteSuccessBanner.value = true;
+  successMessageList.value.splice(0);
+  successMessageList.value.push('Customer deleted successfully!');
+
   await refresh();
 };
 
-definePageMeta({
-  middleware: ['auth'],
-});
-
 onMounted(async () => {
-  if (showCreateSuccessBanner.value) {
+  if (route.query.success === '1') {
     refresh().then(() => {
+      successMessageList.value.push('Customer created successfully!');
       setTimeout(() => {
-        showCreateSuccessBanner.value = false;
+        successMessageList.value.splice(0);
       }, 3000);
     });
   }
@@ -106,15 +105,8 @@ const columns: Array<{
   <h1>Customer</h1>
   <h2>Customer List</h2>
 
-  <q-banner v-if="showCreateSuccessBanner" class="bg-secondary text-white q-pa-md">
-    Customer created successfully!
-  </q-banner>
-  <q-banner v-if="showDeleteSuccessBanner" class="bg-secondary text-white q-pa-md">
-    Customer deleted successfully!
-  </q-banner>
-  <q-banner v-if="errorMessage" class="bg-negative text-white q-pa-md">
-    {{ errorMessage }}
-  </q-banner>
+  <SuccessMessages :success-messages="successMessageList" />
+  <ErrorMessages :error-messages="errorMessageList" />
 
   <div class="q-ma-md flex justify-end">
     <q-btn color="primary" label="create" @click="handleCreate" />
