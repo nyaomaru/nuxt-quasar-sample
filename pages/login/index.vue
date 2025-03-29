@@ -6,42 +6,31 @@ import { ROUTE } from '@/constants/route';
 import { authSchema, type AuthSchema } from '@/schemas/login';
 
 const router = useRouter();
+const { resetAuth } = useAuthState();
 
 const loginForm = reactive<AuthSchema>({ userName: '', password: '' });
 
-const errorMessage = ref('');
-const { errorMessages } = useErrorMessage();
+const { errorMessages, handleValidationErrors, isValidateError } = useValidationError();
 const errorMessageList = ref<string[]>([]);
 const { validate } = useSchemaValidation(authSchema, errorMessages);
 const { login } = useAuth();
-
-const handleErrors = () => {
-  errorMessageList.value = [];
-  if (typeof errorMessages.value !== 'string' && errorMessages.value !== null) {
-    setErrorMessageList(errorMessageList, errorMessages.value.issues);
-    errorMessages.value = null;
-    return false;
-  }
-  return true;
-};
+const { handleApiError } = useApiError();
 
 const handleLogin = async () => {
   validate(loginForm);
+  handleValidationErrors(errorMessageList);
 
-  if (!handleErrors()) {
-    return;
-  }
+  if (isValidateError.value) return;
 
   try {
     await login(loginForm.userName, loginForm.password);
     router.push('/');
   } catch (error) {
-    console.error(error);
-    errorMessage.value = `Failed to login. Please try again.:${error}`;
+    handleApiError(error, errorMessageList, 'Failed to login. Please try again.');
   }
 };
 
-const resetUser = () => {
+const handleRegister = () => {
   resetAuth();
   router.push(ROUTE.REGISTER);
 };
@@ -54,10 +43,11 @@ definePageMeta({
 <template>
   <h2>Please type registered name and password again</h2>
 
-  <q-banner v-if="errorMessage" class="bg-negative text-white q-pa-md">
-    {{ errorMessage }}
-  </q-banner>
   <ErrorMessages :error-messages="errorMessageList" />
+
+  <div class="q-ma-md flex justify-end">
+    <q-btn color="primary" label="register" @click="handleRegister" />
+  </div>
 
   <Form
     v-model="loginForm"

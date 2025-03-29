@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import ContentCard from '@/components/molecules/ContentCard.vue';
 import ErrorMessages from '@/components/molecules/ErrorMessages.vue';
+import SuccessMessages from '@/components/molecules/SuccessMessages.vue';
+import ContentCard from '@/components/molecules/ContentCard.vue';
 
 import { customerSchema, type CustomerDetailSchema } from '@/schemas/customer';
 
@@ -26,10 +27,11 @@ const customerData = reactive<CustomerDetailSchema>({
   age: 0,
 });
 
-const errorMessage = ref('');
-const { errorMessages } = useErrorMessage();
+const { errorMessages, handleValidationErrors, isValidateError } = useValidationError();
 const errorMessageList = ref<string[]>([]);
+const successMessageList = ref<string[]>([]);
 const { validate } = useSchemaValidation(customerSchema, errorMessages);
+const { handleApiError } = useApiError();
 
 watch(
   customer,
@@ -41,24 +43,12 @@ watch(
   { immediate: true }
 );
 
-const handleErrorMessages = () => {
-  errorMessageList.value = [];
-  if (!isString(errorMessages.value) && errorMessages.value !== null) {
-    setErrorMessageList(errorMessageList, errorMessages.value.issues);
-    errorMessages.value = null;
-  }
-};
-
-const isError = computed(() => errorMessageList.value.length > 0);
-
 const handleUpdate = async () => {
   customerData.age = Number(customerData.age);
   validate(customerData);
-  handleErrorMessages();
+  handleValidationErrors(errorMessageList);
 
-  if (isError.value) {
-    return;
-  }
+  if (isValidateError.value) return;
 
   try {
     await fetchWithAuth<Response>(`/api/customers/${route.params.id}`, {
@@ -66,33 +56,25 @@ const handleUpdate = async () => {
       body: JSON.stringify(customerData),
     });
 
+    successMessageList.value.push('Customer updated successfully!');
     showUpdateSuccessBanner.value = true;
     refresh();
   } catch (error) {
-    console.error(error);
-    errorMessage.value = `Failed to update customer. Please try again. ${error}`;
+    handleApiError(error, errorMessageList, 'Failed to update customer. Please try again.');
   }
 };
 
 const handleBack = async () => {
   await router.push('/customer');
 };
-
-definePageMeta({
-  middleware: ['auth'],
-});
 </script>
 
 <template>
   <h1>Customer</h1>
   <h2>Customer Detail</h2>
-  <q-banner v-if="showUpdateSuccessBanner" class="bg-secondary text-white q-pa-md">
-    Customer updated successfully!
-  </q-banner>
+
+  <SuccessMessages :success-messages="errorMessageList" />
   <ErrorMessages :error-messages="errorMessageList" />
-  <q-banner v-if="errorMessage" class="bg-negative text-white q-pa-md">
-    {{ errorMessage }}
-  </q-banner>
   <div v-if="error">
     <q-banner class="bg-red text-white">
       {{ error.message }}

@@ -1,17 +1,17 @@
 <script lang="ts" setup>
 type Props = {
-  errorMessage: string;
+  successMessage: string;
 };
 
 const props = withDefaults(defineProps<Props>(), {
-  errorMessage: '',
+  successMessage: '',
 });
 </script>
 
 <template>
-  <q-card v-show="showError" class="bg-red text-white q-pa-sm">
+  <q-card v-show="showError" class="bg-secondary text-white q-pa-sm">
     <q-card-section>
-      <div class="text-h6">{{ errorMessage }}</div>
+      <div class="text-h6">{{ successMessage }}</div>
     </q-card-section>
   </q-card>
 </template>
