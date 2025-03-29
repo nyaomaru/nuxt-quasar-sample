@@ -9,7 +9,7 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <q-card v-show="showError" class="bg-red text-white">
+  <q-card v-show="showError" class="bg-red text-white q-pa-sm">
     <q-card-section>
       <div class="text-h6">{{ errorMessage }}</div>
     </q-card-section>
