@@ -20,26 +20,35 @@ useHead({
 <template>
   <q-layout view="lHh lpr lFf" class="container bg-dark text-white">
     <AuthWrapper>
-      <header class="header">
-        <slot name="header" />
-      </header>
-      <main class="main q-mx-auto flex">
-        <q-page-container>
-          <q-breadcrumbs v-if="showBreadCrumbs">
-            <q-breadcrumbs-el label="Home" :to="{ path: '/' }" />
-            <q-breadcrumbs-el
-              v-for="(crumb, index) in breadCrumbs"
-              :key="index"
-              :label="crumb.label"
-              :to="{ path: crumb.to }"
-            />
-          </q-breadcrumbs>
-          <slot />
-        </q-page-container>
-      </main>
-      <footer class="footer">
-        <slot name="footer" />
-      </footer>
+      <NuxtErrorBoundary>
+        <header class="header">
+          <slot name="header" />
+        </header>
+        <main class="main q-mx-auto flex">
+          <q-page-container>
+            <q-breadcrumbs v-if="showBreadCrumbs">
+              <q-breadcrumbs-el label="Home" :to="{ path: '/' }" />
+              <q-breadcrumbs-el
+                v-for="(crumb, index) in breadCrumbs"
+                :key="index"
+                :label="crumb.label"
+                :to="{ path: crumb.to }"
+              />
+            </q-breadcrumbs>
+            <slot />
+          </q-page-container>
+        </main>
+        <footer class="footer">
+          <slot name="footer" />
+        </footer>
+        <template #error="{ error, clearError }">
+          <div class="error-container">
+            <h1>Something went wrong!</h1>
+            <p v-if="error">{{ error.message }}</p>
+            <q-btn @click="clearError">Retry</q-btn>
+          </div>
+        </template>
+      </NuxtErrorBoundary>
     </AuthWrapper>
   </q-layout>
 </template>

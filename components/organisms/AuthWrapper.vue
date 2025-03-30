@@ -15,8 +15,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="isLoading">
-    <q-spinner-dots color="primary" size="2em" />
+  <div v-if="isLoading" class="fixed-center full-width full-height bg-black flex flex-center">
+    <q-spinner color="primary" size="4em" />
   </div>
   <slot v-else />
 </template>
