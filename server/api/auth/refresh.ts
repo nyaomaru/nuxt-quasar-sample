@@ -13,13 +13,13 @@ export default defineEventHandler(async event => {
   }
 
   try {
-    const decoded = jwt.verify(refreshToken, JWT_SECRET) as { userId: number };
+    const decoded = jwt.verify(refreshToken, JWT_SECRET) as { userId: number; name: string };
 
-    const newAccessToken = jwt.sign({ userId: decoded.userId }, JWT_SECRET, {
+    const newAccessToken = jwt.sign({ userId: decoded.userId, name: decoded.name }, JWT_SECRET, {
       expiresIn: '15m',
     });
 
-    return { access_token: newAccessToken, statusCode: 200 };
+    return { access_token: newAccessToken, name: decoded.name, statusCode: 200 };
   } catch (error) {
     throw createError({ statusMessage: 'Invalid refresh token', statusCode: 401 });
   }

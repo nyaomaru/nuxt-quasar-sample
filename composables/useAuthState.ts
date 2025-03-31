@@ -5,6 +5,7 @@ type RefreshResponse = {
   statusCode: number;
   statusMessage?: string;
   access_token: string;
+  name?: string;
 };
 
 export const useAuthState = () => {
@@ -36,6 +37,7 @@ export const useAuthState = () => {
 
       auth.value.isAuthenticated = true;
       auth.value.accessToken = response.access_token;
+      if (response.name) auth.value.userName = response.name;
     } catch (error) {
       auth.value.isAuthenticated = false;
       navigateTo(ROUTE.LOGIN);

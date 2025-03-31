@@ -34,7 +34,9 @@ export const useAuth = () => {
       if (response.statusCode !== 200) {
         throw new Error('Failed to refresh token');
       }
-      auth.value.accessToken = response.access_token;
+
+      if (response.access_token) auth.value.accessToken = response.access_token;
+      if (response.name) auth.value.userName = response.name;
     } catch (error) {
       console.error('Token refresh failed:', error);
       resetAuth();

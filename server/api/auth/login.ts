@@ -24,7 +24,9 @@ export default defineEventHandler(async event => {
   const accessToken = jwt.sign({ userId: user.id, name: user.name }, JWT_SECRET, {
     expiresIn: '15m',
   });
-  const refreshToken = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '7d' });
+  const refreshToken = jwt.sign({ userId: user.id, name: user.name }, JWT_SECRET, {
+    expiresIn: '7d',
+  });
 
   event.node.res.setHeader(
     'Set-Cookie',
