@@ -7,6 +7,7 @@ const { data: comment } = await useFetch('/api/nyaomaru');
 const { data: menuList } = await useFetch<Menu[]>('/api/menu');
 
 const { logout } = useAuth();
+const { auth } = useAuthState();
 
 const route = useRoute();
 
@@ -32,7 +33,9 @@ const handleLogout = () => {
         </q-avatar>
         {{ comment?.nyaomaru }}
       </q-toolbar-title>
+      <q-space />
 
+      <q-toolbar-title class="text-right">User Name: {{ auth.userName }}</q-toolbar-title>
       <q-btn class="q-pa-sm" color="primary" outline label="logout" @click="handleLogout" />
     </q-toolbar>
   </q-header>
