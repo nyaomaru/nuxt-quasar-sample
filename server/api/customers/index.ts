@@ -1,10 +1,8 @@
-import prisma from '../../prisma/client';
+import { getCustomers, createCustomer } from '~/services/customerService';
 
 export default defineEventHandler(async event => {
   if (event.node.req.method === 'GET') {
-    const customers = await prisma.customer.findMany({
-      orderBy: { id: 'asc' },
-    });
+    const customers = await getCustomers();
     return customers;
   }
 
@@ -15,15 +13,7 @@ export default defineEventHandler(async event => {
       throw createError({ message: 'Missing required fields', statusCode: 400 });
     }
 
-    const customer = await prisma.customer.create({
-      data: {
-        name: body.name,
-        location: body.location,
-        hobby: body.hobby,
-        age: body.age,
-      },
-    });
-
-    return { statusMessage: 'Customer created', statusCode: 201 };
+    const customer = await createCustomer(body);
+    return { statusMessage: 'Customer created', statusCode: 201, customer };
   }
 });

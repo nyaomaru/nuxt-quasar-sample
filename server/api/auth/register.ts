@@ -1,5 +1,5 @@
-import prisma from '../../prisma/client';
-import bcrypt from 'bcryptjs';
+import { createUser } from '~/services/userService';
+import { createUserResponse } from '~/utils/responseUtils';
 
 export default defineEventHandler(async event => {
   if (event.node.req.method !== 'POST')
@@ -11,11 +11,14 @@ export default defineEventHandler(async event => {
     throw createError({ statusMessage: 'Missing required fields', statusCode: 400 });
   }
 
-  const existingUser = await prisma.user.findUnique({ where: { name: userName } });
-  if (existingUser) throw createError({ statusMessage: 'User already exists', statusCode: 400 });
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await prisma.user.create({ data: { name: userName, password: hashedPassword } });
-
-  return { statusMessage: 'Customer created', userId: user.id, statusCode: 201 };
+  try {
+    const user = await createUser(userName, password);
+    const response = createUserResponse('Customer created', user.id);
+    return response;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw createError({ statusMessage: error.message, statusCode: 400 });
+    }
+    throw createError({ statusMessage: 'Failed to create user', statusCode: 400 });
+  }
 });
