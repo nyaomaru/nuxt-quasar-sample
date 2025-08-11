@@ -31,10 +31,10 @@ importers:
         version: 3.16.1(@parcel/watcher@2.5.1)(@types/node@22.13.13)(db0@0.3.1)(eslint@9.22.0(jiti@2.4.2))(ioredis@5.6.0)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.36.0)(sass@1.86.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(vite@6.2.2(@types/node@22.13.13)(jiti@2.4.2)(sass@1.86.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))(yaml@2.7.0)
       nuxt-quasar-ui:
         specifier: ^2.1.5
-        version: 2.1.12(@quasar/extras@1.16.17)(magicast@0.3.5)(quasar@2.18.1)
+        version: 2.1.12(@quasar/extras@1.16.17)(magicast@0.3.5)(quasar@2.18.2)
       quasar:
         specifier: ^2.15.3
-        version: 2.18.1
+        version: 2.18.2
       vue:
         specifier: ^3.4.21
         version: 3.5.13(typescript@5.8.2)
@@ -3720,8 +3720,8 @@ packages:
   quansync@0.2.10:
     resolution: {integrity: sha512-t41VRkMYbkHyCYmOvx/6URnN80H7k4X0lLdBMGsz+maAwrJQYB1djpV6vHrQIBE0WBSGqhtEHrK9U3DWWH8v7A==}
 
-  quasar@2.18.1:
-    resolution: {integrity: sha512-db/P64Mzpt1uXJ0MapaG+IYJQ9hHDb5KtTCoszwC78DR7sA+Uoj7nBW2EytwYykIExEmqavOvKrdasTvqhkgEg==}
+  quasar@2.18.2:
+    resolution: {integrity: sha512-SeSAamH4vgYH9alLTdVL2o1fTTwz7VZnS2+gvIwt6qsH3ndrn/tQW64sWE78VSvrHlWINYbXESVF/cvWEuTYxg==}
     engines: {node: '>= 10.18.1', npm: '>= 6.13.4', yarn: '>= 1.21.1'}
 
   queue-microtask@1.2.3:
@@ -8532,7 +8532,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nuxt-quasar-ui@2.1.12(@quasar/extras@1.16.17)(magicast@0.3.5)(quasar@2.18.1):
+  nuxt-quasar-ui@2.1.12(@quasar/extras@1.16.17)(magicast@0.3.5)(quasar@2.18.2):
     dependencies:
       '@nuxt/kit': 3.16.1(magicast@0.3.5)
       '@quasar/extras': 1.16.17
@@ -8540,7 +8540,7 @@ snapshots:
       magic-string: 0.30.17
       mlly: 1.7.4
       p-memoize: 7.1.1
-      quasar: 2.18.1
+      quasar: 2.18.2
       semver: 7.7.1
     transitivePeerDependencies:
       - magicast
@@ -9090,7 +9090,7 @@ snapshots:
 
   quansync@0.2.10: {}
 
-  quasar@2.18.1: {}
+  quasar@2.18.2: {}
 
   queue-microtask@1.2.3: {}
 
