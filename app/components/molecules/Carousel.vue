@@ -10,7 +10,7 @@ type Props = {
   carouselList: CarouselInfo[];
 };
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   modelValue: '',
 });
 

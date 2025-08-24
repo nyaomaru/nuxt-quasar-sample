@@ -3,7 +3,7 @@ type Props = {
   successMessage: string;
 };
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   successMessage: '',
 });
 </script>

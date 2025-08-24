@@ -3,7 +3,7 @@ type Props = {
   errorMessage: string;
 };
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   errorMessage: '',
 });
 </script>

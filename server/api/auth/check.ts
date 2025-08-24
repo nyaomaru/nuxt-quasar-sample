@@ -1,4 +1,4 @@
-import prisma from '../../prisma/client';
+import prisma from '@@/server/prisma/client';
 
 export default defineEventHandler(async event => {
   if (event.node.req.method !== 'GET')

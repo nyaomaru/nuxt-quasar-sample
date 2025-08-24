@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async () => {
       credentials: 'include',
     });
 
-    if (count < 1) {
+    if (count && count < 1) {
       return navigateTo(ROUTE.REGISTER);
     }
   } catch (error) {

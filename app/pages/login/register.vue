@@ -3,52 +3,40 @@ import Form from '@/components/molecules/Form.vue';
 import ErrorMessages from '@/components/molecules/ErrorMessages.vue';
 
 import { ROUTE } from '@/constants/route';
-import { authSchema, type AuthSchema } from '@/schemas/login';
+import { authSchema, type AuthSchema } from '@@/schemas/login';
 
-const router = useRouter();
-const { resetAuth } = useAuthState();
-
-const loginForm = reactive<AuthSchema>({ userName: '', password: '' });
+const loginForm = ref<AuthSchema>({ userName: '', password: '' });
+const errorMessageList = ref<string[]>([]);
 
 const { errorMessages, handleValidationErrors, isValidateError } = useValidationError();
-const errorMessageList = ref<string[]>([]);
 const { validate } = useSchemaValidation(authSchema, errorMessages);
-const { login } = useAuth();
 const { handleApiError } = useApiError();
 
 const handleLogin = async () => {
-  validate(loginForm);
+  validate(loginForm.value);
   handleValidationErrors(errorMessageList);
 
   if (isValidateError.value) return;
 
-  try {
-    await login(loginForm.userName, loginForm.password);
-    router.push('/');
-  } catch (error) {
-    handleApiError(error, errorMessageList, 'Failed to login. Please try again.');
+  const { error } = await useFetch('/api/auth/register', {
+    method: 'POST',
+    body: JSON.stringify(loginForm.value),
+  });
+
+  if (error.value) {
+    handleApiError(error.value, errorMessageList, 'Failed to login. Please try again.');
+    return;
+  } else {
+    const router = useRouter();
+    router.push(ROUTE.LOGIN);
   }
 };
-
-const handleRegister = () => {
-  resetAuth();
-  router.push(ROUTE.REGISTER);
-};
-
-definePageMeta({
-  middleware: 'check-user',
-});
 </script>
 
 <template>
-  <h2>Please type registered name and password again</h2>
+  <h2>First, you need to create login user</h2>
 
   <ErrorMessages :error-messages="errorMessageList" />
-
-  <div class="q-ma-md flex justify-end">
-    <q-btn color="primary" label="register" @click="handleRegister" />
-  </div>
-
   <Form
     v-model="loginForm"
     :fields="[

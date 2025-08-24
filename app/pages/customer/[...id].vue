@@ -3,7 +3,7 @@ import ErrorMessages from '@/components/molecules/ErrorMessages.vue';
 import SuccessMessages from '@/components/molecules/SuccessMessages.vue';
 import ContentCard from '@/components/molecules/ContentCard.vue';
 
-import { customerSchema, type CustomerDetailSchema } from '@/schemas/customer';
+import { customerSchema, type CustomerDetailSchema } from '@@/schemas/customer';
 
 const route = useRoute();
 const { fetchWithAuth } = useFetchWithAuth();
