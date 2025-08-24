@@ -4,7 +4,7 @@ type Props = {
   buttonName: string;
 };
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   disabled: false,
   buttonName: 'Submit',
 });

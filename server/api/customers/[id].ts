@@ -1,4 +1,4 @@
-import { getCustomerById, deleteCustomerById, updateCustomer } from '~/services/customerService';
+import { getCustomerById, deleteCustomerById, updateCustomer } from '@@/services/customerService';
 
 export default defineEventHandler(async event => {
   const id = event.context.params?.id;

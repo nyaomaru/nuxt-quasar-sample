@@ -1,13 +1,20 @@
 <script lang="ts" setup>
+import { isNumber, isString } from '@@/utils/is';
+
 type Props = {
-  modelValue: string | number;
+  modelValue?: string | number;
   label: string;
 };
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   modelValue: '',
   label: 'input',
 });
+
+const textInputValidation = (val: string | number | unknown[]) => {
+  if (isNumber(val)) return true;
+  return (isString(val) && val.length > 0) || 'Please use minimum one string';
+};
 
 const emit = defineEmits(['update:modelValue']);
 </script>
@@ -20,12 +27,7 @@ const emit = defineEmits(['update:modelValue']);
     bg-color="white"
     filled
     :label="label"
-    :rules="[
-      (val: string | number | unknown[]) => {
-        if (isNumber(val)) return true;
-        return (isString(val) && val.length > 0) || 'Please use minimum one string';
-      },
-    ]"
+    :rules="[textInputValidation]"
     @update:model-value="(value: unknown) => emit('update:modelValue', value)"
   />
 </template>

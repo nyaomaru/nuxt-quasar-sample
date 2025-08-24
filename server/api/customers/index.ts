@@ -1,4 +1,4 @@
-import { getCustomers, createCustomer } from '~/services/customerService';
+import { getCustomers, createCustomer } from '@@/services/customerService';
 
 export default defineEventHandler(async event => {
   if (event.node.req.method === 'GET') {

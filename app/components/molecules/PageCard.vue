@@ -1,29 +1,17 @@
 <script setup lang="ts">
-const props = defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-  subtitle: {
-    type: String,
-    required: true,
-  },
-  imgSrc: {
-    type: String,
-    required: true,
-  },
-  imgHeight: {
-    type: String,
-    default: '240px',
-  },
-  imgWidth: {
-    type: String,
-    default: '480px',
-  },
-  imgAlt: {
-    type: String,
-    default: 'image',
-  },
+type Props = {
+  title: string;
+  subtitle: string;
+  imgSrc: string;
+  imgHeight?: string;
+  imgWidth?: string;
+  imgAlt?: string;
+};
+
+withDefaults(defineProps<Props>(), {
+  imgHeight: '240px',
+  imgWidth: '480px',
+  imgAlt: 'image',
 });
 
 const emit = defineEmits<{
@@ -37,7 +25,7 @@ const toPage = () => {
 
 <template>
   <q-card class="pageCard" @click="toPage">
-    <img :src="imgSrc" :height="imgHeight" :width="imgWidth" :alt="imgAlt" >
+    <img :src="imgSrc" :height="imgHeight" :width="imgWidth" :alt="imgAlt" />
 
     <q-card-section>
       <div class="text-h6">{{ title }}</div>

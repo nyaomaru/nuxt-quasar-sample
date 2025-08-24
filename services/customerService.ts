@@ -1,5 +1,5 @@
-import prisma from '../server/prisma/client';
-import type { CustomerSchema } from '../schemas/customer';
+import prisma from '@@/server/prisma/client';
+import type { CustomerSchema } from '@@/schemas/customer';
 
 export async function getCustomers() {
   return prisma.customer.findMany({

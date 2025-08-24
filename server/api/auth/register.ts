@@ -1,5 +1,5 @@
-import { createUser } from '~/services/userService';
-import { createUserResponse } from '~/utils/responseUtils';
+import { createUser } from '@@/services/userService';
+import { createUserResponse } from '@@/utils/responseUtils';
 
 export default defineEventHandler(async event => {
   if (event.node.req.method !== 'POST')

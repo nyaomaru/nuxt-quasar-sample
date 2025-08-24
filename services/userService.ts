@@ -1,4 +1,4 @@
-import prisma from '../server/prisma/client';
+import prisma from '@@/server/prisma/client';
 import bcrypt from 'bcryptjs';
 
 export async function createUser(userName: string, password: string) {

@@ -1,5 +1,5 @@
 import { ROUTE } from '@/constants/route';
-import type { AuthSchema, AuthCheckSchema } from '@/schemas/login';
+import type { AuthCheckSchema } from '@@/schemas/login';
 
 type RefreshResponse = {
   statusCode: number;
