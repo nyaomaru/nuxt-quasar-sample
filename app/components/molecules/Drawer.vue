@@ -22,7 +22,7 @@ const emit = defineEmits(['update:modelValue']);
 const router = useRouter();
 
 const handleClick = (url: Route) => {
-  router.push(url);
+  if (url) router.push(url);
 };
 
 const { logout } = useAuth();
