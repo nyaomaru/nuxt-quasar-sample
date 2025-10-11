@@ -1,5 +1,5 @@
 import type { ZodError } from 'zod';
-import { isString } from '@@/utils/is';
+import is from 'is-kit';
 
 export const useValidationError = () => {
   const errorMessages = ref<ZodError | null>(null);
@@ -9,7 +9,7 @@ export const useValidationError = () => {
   const handleValidationErrors = (errorMessageList: Ref<string[]>) => {
     errorMessageList.value.splice(0);
 
-    if (!isString(errorMessages.value) && errorMessages.value !== null) {
+    if (!is.string(errorMessages.value) && errorMessages.value !== null) {
       setErrorMessageList(errorMessageList, errorMessages.value.issues);
       errorMessages.value = null;
       isValidateError.value = true;

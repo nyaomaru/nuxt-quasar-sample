@@ -20,6 +20,9 @@ importers:
       cookie:
         specifier: ^1.0.2
         version: 1.0.2
+      is-kit:
+        specifier: ^1.0.1
+        version: 1.0.1
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -3287,6 +3290,9 @@ packages:
   is-installed-globally@1.0.0:
     resolution: {integrity: sha512-K55T22lfpQ63N4KEN57jZUAaAYqYHEe8veb/TycJRk9DdSCLLcovXz/mL6mOnhQaZsQGwPhuFopdQIlqGSEjiQ==}
     engines: {node: '>=18'}
+
+  is-kit@1.0.1:
+    resolution: {integrity: sha512-9OCs6DQI/W1q9WqmD9S/L8k/yCG7PWzaxX+zi0CB2IKdIvUQJ0QZhWJgW2ZKc91Sx8uGPUyBm5oWE9PskbH0aQ==}
 
   is-module@1.0.0:
     resolution: {integrity: sha512-51ypPSPCoTEIN9dy5Oy+h4pShgJmPCygKfyRCISBI+JoWT/2oJvK8QPxmwv7b/p239jXrm9M1mlQbyKJ5A152g==}
@@ -8863,6 +8869,8 @@ snapshots:
     dependencies:
       global-directory: 4.0.1
       is-path-inside: 4.0.0
+
+  is-kit@1.0.1: {}
 
   is-module@1.0.0: {}
 

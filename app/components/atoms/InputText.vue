@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { isNumber, isString } from '@@/utils/is';
+import is from 'is-kit';
 
 type Props = {
   modelValue?: string | number;
@@ -12,8 +12,8 @@ withDefaults(defineProps<Props>(), {
 });
 
 const textInputValidation = (val: string | number | unknown[]) => {
-  if (isNumber(val)) return true;
-  return (isString(val) && val.length > 0) || 'Please use minimum one string';
+  if (is.number(val)) return true;
+  return (is.string(val) && val.length > 0) || 'Please use minimum one string';
 };
 
 const emit = defineEmits(['update:modelValue']);
