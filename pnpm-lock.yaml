@@ -20,12 +20,12 @@ importers:
       cookie:
         specifier: ^1.0.2
         version: 1.0.2
-      jsonwebtoken:
-        specifier: ^9.0.2
-        version: 9.0.2
       is-kit:
         specifier: ^1.0.1
         version: 1.0.1
+      jsonwebtoken:
+        specifier: ^9.0.2
+        version: 9.0.2
       nuxt:
         specifier: ^4.0.3
         version: 4.1.2(@parcel/watcher@2.5.1)(@types/node@22.18.9)(@vue/compiler-sfc@3.5.22)(db0@0.3.2)(eslint@9.37.0(jiti@2.6.0))(ioredis@5.8.0)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.52.2)(sass@1.86.0)(terser@5.44.0)(tsx@4.19.3)(typescript@5.8.2)(vite@7.1.7(@types/node@22.18.9)(jiti@2.6.0)(sass@1.86.0)(terser@5.44.0)(tsx@4.19.3)(yaml@2.8.1))(yaml@2.8.1)
@@ -101,6 +101,7 @@ importers:
         version: 5.8.2
 
 packages:
+
   '@antfu/install-pkg@1.1.0':
     resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
 
@@ -3289,6 +3290,9 @@ packages:
   is-installed-globally@1.0.0:
     resolution: {integrity: sha512-K55T22lfpQ63N4KEN57jZUAaAYqYHEe8veb/TycJRk9DdSCLLcovXz/mL6mOnhQaZsQGwPhuFopdQIlqGSEjiQ==}
     engines: {node: '>=18'}
+
+  is-kit@1.0.1:
+    resolution: {integrity: sha512-9OCs6DQI/W1q9WqmD9S/L8k/yCG7PWzaxX+zi0CB2IKdIvUQJ0QZhWJgW2ZKc91Sx8uGPUyBm5oWE9PskbH0aQ==}
 
   is-module@1.0.0:
     resolution: {integrity: sha512-51ypPSPCoTEIN9dy5Oy+h4pShgJmPCygKfyRCISBI+JoWT/2oJvK8QPxmwv7b/p239jXrm9M1mlQbyKJ5A152g==}
@@ -8865,6 +8869,8 @@ snapshots:
     dependencies:
       global-directory: 4.0.1
       is-path-inside: 4.0.0
+
+  is-kit@1.0.1: {}
 
   is-module@1.0.0: {}
 
