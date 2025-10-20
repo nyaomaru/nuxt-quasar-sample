@@ -18,17 +18,10 @@ jobs:
         with:
           install: true
 
-      - name: Get pnpm store directory
-        id: pnpm-store-path
-        run: echo "dir=$(pnpm store path)" >> "$GITHUB_OUTPUT"
-
-      - name: Cache pnpm store
-        uses: actions/cache@v4
+      - uses: actions/setup-node@v4
         with:
-          path: ${{ steps.pnpm-store-path.outputs.dir }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+          node-version: "22"
+          cache: "pnpm"
 
       - name: Get latest version from npm
         id: latest
