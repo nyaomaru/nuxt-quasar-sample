@@ -13,15 +13,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup mise
-        uses: jdx/mise-action@v2
-        with:
-          install: true
-
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
           cache: "pnpm"
+
+      - name: Install pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
 
       - name: Get latest version from npm
         id: latest
