@@ -2,11 +2,6 @@
 node = "20"
 pnpm = "10.6.5"
 
-[env]
-# Keep pnpm binaries on PATH when using mise-managed environments
-PNPM_HOME = "{{ config_dir }}/.pnpm"
-PATH = "{{ env.PNPM_HOME }}:{{ env.PATH }}"
-
 [tasks.install]
 description = "Install JavaScript dependencies with pnpm"
 run = "pnpm install"
