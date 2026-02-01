@@ -10,8 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Defensive cleanup: Remove any pre-existing git auth config to prevent duplicate headers
+      - name: Clean git config
+        run: |
+          git config --global --unset-all http.https://github.com/.extraheader || true
+          git config --system --unset-all http.https://github.com/.extraheader || true
+
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          # Don't persist credentials - let create-pull-request handle auth
+          persist-credentials: false
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup tools via mise
         uses: jdx/mise-action@v3
