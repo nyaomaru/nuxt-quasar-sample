@@ -1,6 +1,6 @@
 [tools]
 node = "20"
-pnpm = "10.28.2"
+pnpm = "10.29.1"
 
 [tasks.install]
 description = "Install JavaScript dependencies with pnpm"
