@@ -21,8 +21,8 @@ importers:
         specifier: ^1.0.2
         version: 1.1.1
       is-kit:
-        specifier: ^1.6.2
-        version: 1.6.2
+        specifier: ^1.6.3
+        version: 1.6.3
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.3
@@ -3573,8 +3573,8 @@ packages:
     resolution: {integrity: sha512-K55T22lfpQ63N4KEN57jZUAaAYqYHEe8veb/TycJRk9DdSCLLcovXz/mL6mOnhQaZsQGwPhuFopdQIlqGSEjiQ==}
     engines: {node: '>=18'}
 
-  is-kit@1.6.2:
-    resolution: {integrity: sha512-mWa2NOzcUkUEmT/TnT+Oma1ULrtufwbX7GHjWxgCPwzRAyUx1jRgdESkBQiGCOgVUPxdGPcjTLRChd4vxuxXMA==}
+  is-kit@1.6.3:
+    resolution: {integrity: sha512-zvszYy7Ym5pa9CaFHyVKExtaZ5/fF7HJf3HdUjxZo8jNp9mg9X9s0NIraMJrW0WC7s3i7ndqnCxdBD0YKQvLuw==}
 
   is-module@1.0.0:
     resolution: {integrity: sha512-51ypPSPCoTEIN9dy5Oy+h4pShgJmPCygKfyRCISBI+JoWT/2oJvK8QPxmwv7b/p239jXrm9M1mlQbyKJ5A152g==}
@@ -9389,7 +9389,7 @@ snapshots:
       global-directory: 4.0.1
       is-path-inside: 4.0.0
 
-  is-kit@1.6.2: {}
+  is-kit@1.6.3: {}
 
   is-module@1.0.0: {}
 
