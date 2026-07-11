@@ -25,7 +25,7 @@
     "cookie": "^1.0.2",
     "jsonwebtoken": "^9.0.2",
     "is-kit": "^1.11.2",
-    "nuxt": "^4.0.3",
+    "nuxt": "^4.4.7",
     "nuxt-quasar-ui": "^2.1.5",
     "quasar": "^2.15.3",
     "vue": "^3.4.21",
